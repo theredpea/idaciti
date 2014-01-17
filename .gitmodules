@@ -1,0 +1,6 @@
+[submodule "scripts/tabletop"]
+	path = scripts/tabletop
+	url = https://github.com/jsoma/tabletop.git
+[submodule "tabletop"]
+	path = tabletop
+	url = https://github.com/jsoma/tabletop.git

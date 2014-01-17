@@ -47,8 +47,8 @@ function showInfo(data, tabletop){
 
 	var title = svg.append('text')
 				.attr('class', 'title')
-				.attr('dy', '.71em')
-				.text('Concept Heat Map');
+				.attr('dy', '.71em');
+				//.text('Concept Heat Map');
 
 	var nestConcepts = d3
 								.nest()
@@ -62,15 +62,38 @@ function showInfo(data, tabletop){
 								//The former maintains an order
 		coverages=conceptAverage.map(function(_){return _.values});
 		colorScale.domain([d3.min(coverages), d3.max(coverages)]);
-
+	//TODO: Lump all below into a 'g'
 	svg.selectAll('rect.coverage')
-		.data(conceptAverage) //key is the concept, value is the average coverage
+		.data(conceptAverage) //TODO: Provide a keyfunction so it is bound
 		.enter()
 		.append('rect')
 		.attr('class','coverage')
 		.attr('y', function(d, i){ return i*blockHeight })
 		.attr('x', 0)
 		.attr('width', blockHeight).attr('height', blockHeight)
-		.style('fill', function(d){ return colorScale(d.values); });
+		.style('fill', function(d){ return colorScale(d.values); })
+
+	svg.selectAll('text.coverage')
+		.data(conceptAverage)//TODO: Provide a keyfunction so it is bound
+		.enter()
+		.append('text')
+		.attr('y', function(d, i){ return i*blockHeight })
+		.attr('x', 0)
+		.attr('dy', '1em')
+		.attr('class', 'coverage')
+		.text(function(d){ return Math.round(d.values*100) +'%'; })
+		.style('fill', 'white')
+		.style('font-family', 'sans-serif');
+
+	svg.selectAll('text.label')
+		.data(conceptAverage)//TODO: Provide a keyfunction
+		.enter()
+		.append('text')
+		.attr('y', function(d, i){ return i*blockHeight })
+		.attr('x', blockHeight)
+		.attr('dy', '1em')
+		.attr('class', 'label')
+		.text(function(d){ return d.key })
+		.style('font-family', 'sans-serif');
 
 }

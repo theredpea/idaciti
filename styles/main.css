@@ -1,28 +1,41 @@
 body,html{ height:100%; }
-#controls{width:100%;
+#filters{width:100%;
 height:100px;}
 #chart,#storyboard{
 	float:left;
 	width:50%;
 	min-height:100px;
 }
+#chart{
+	clear:both;
+}
 body{ 
 	background: -webkit-linear-gradient(#000,#222);
+	font-family:'Myriad Pro',sans-serif;
+	font-size:2em;
 }
 
 rect{
-	stroke:black;
+	stroke:#000;
 	stroke-width:3px;
 }
 rect.gradient{
-	/*
-	background: -webkit-linear-gradient(#000,#222);
-	*/
 	fill:url(#cellOverlay);
-	stroke-width:2px;
 }
 rect.gradient:hover{
 	fill:transparent;
-	stroke:#444;
+	stroke:transparent;
 	cursor:pointer;
+}
+fieldset{
+	float:left;
+	min-height:100px;
+	width:20%;
+	background-color:black;
+	border:none;
+	margin:0px 20px;
+}
+legend{
+	color:white;
+
 }

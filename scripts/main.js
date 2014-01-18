@@ -115,3 +115,10 @@ function showInfo(data, tabletop){
 
 */
 }
+
+function FiltersCtrl($scope){
+
+	$scope.companies=[];
+	$scope.industries=['industry one', 'industry two'];
+	$scope.statements=[];
+}

@@ -15,12 +15,20 @@ window.onload = function(){
 
 };
 
+_={};
+_.p=function(propName){
+	return function(obj){
+		return obj[propName];
+	}
+};
+_.i = function(_){ return _; } //Identity function for nested
+
 function showInfo(data, tabletop){
 	var width=400,
 		height=400,
 		margin= {left:20, right:20, top:20, bottom:20},
 		concepts = d3.set(data.map(function(d){return d.concept})).values(),
-		blockHeight = height / concepts.length,
+		blockHeight = (height-margin.top-margin.bottom) / concepts.length,
 		coverages = data.map(function(d){return d.coverage}),
 		maxCoverage = d3.max(coverages),
 		minCoverage = d3.min(coverages),
@@ -38,7 +46,7 @@ function showInfo(data, tabletop){
 
 	window.data=data; //For playing in console
 	
-	var svg= d3.select('body')
+	var svg= d3.select('#chart')
 		.append('svg')
 			.attr('width', 400)
 			.attr('height', 400)
@@ -50,28 +58,32 @@ function showInfo(data, tabletop){
 				.attr('dy', '.71em');
 				//.text('Concept Heat Map');
 
-	var nestConcepts = d3
+	var byConceptThenCompany = d3
 								.nest()
-								.key(function(r){return r.concept}),
-								//.key(function(r){ return r.company}),
+								.key(_.p('concept'))
+								.key(_.p('company')) //TODO: sort?
+								.rollup(function(v){ //This is an array, even though I know there is only one value
+									return v[0]/*d3.mean(v.map(_.p('coverage'))); */})
+								.entries(data);
 
-		conceptAverage = nestConcepts
-								.rollup(function(a){return d3.mean(a.map(function(c){return c.coverage}))})
-								.entries(data); 
-								//entries returns array {key:{keyValue}, values:{value(s)}}, vs map which returns {{keyValue}:{value(s)}}
-								//The former maintains an order
-		coverages=conceptAverage.map(function(_){return _.values});
-		colorScale.domain([d3.min(coverages), d3.max(coverages)]);
 	//TODO: Lump all below into a 'g'
-	svg.selectAll('rect.coverage')
-		.data(conceptAverage) //TODO: Provide a keyfunction so it is bound
+	svg.selectAll('g.concept')
+		.data(byConceptThenCompany) //TODO: Provide a keyfunction so it is bound
 		.enter()
-		.append('rect')
-		.attr('class','coverage')
-		.attr('y', function(d, i){ return i*blockHeight })
-		.attr('x', 0)
-		.attr('width', blockHeight).attr('height', blockHeight)
-		.style('fill', function(d){ return colorScale(d.values); })
+		.append('g')
+		.classed('concept', true)
+		.attr('transform', function(d, i){ return 'translate(0,'+i*blockHeight+')'; })
+		.selectAll('rect.coverage')
+			.data(function(coverageByConcept){ return coverageByConcept.values; })
+			.enter()
+			.append('rect')
+			.classed('coverage', true)
+			.attr('x', function(d, i){ return i*blockHeight })
+			.attr('width', blockHeight).attr('height', blockHeight)	//Squares
+			.attr('data-company', function(d){ return d.values.company; })
+			.attr('data-concept',  function(d){ return d.values.concept; })
+			.style('fill', function(d){ console.log(d); return colorScale(d.values.coverage); });
+			/*
 
 	svg.selectAll('text.coverage')
 		.data(conceptAverage)//TODO: Provide a keyfunction so it is bound
@@ -96,4 +108,5 @@ function showInfo(data, tabletop){
 		.text(function(d){ return d.key })
 		.style('font-family', 'sans-serif');
 
+*/
 }

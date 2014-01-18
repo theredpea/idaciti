@@ -46,10 +46,7 @@ function showInfo(data, tabletop){
 
 	window.data=data; //For playing in console
 	
-	var svg= d3.select('#chart')
-		.append('svg')
-			.attr('width', 400)
-			.attr('height', 400)
+	var svg= d3.select('#chart svg g')
 			.append('g')
 				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 

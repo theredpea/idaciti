@@ -15,5 +15,14 @@ rect{
 	stroke-width:3px;
 }
 rect.gradient{
-
+	/*
+	background: -webkit-linear-gradient(#000,#222);
+	*/
+	fill:url(#cellOverlay);
+	stroke-width:2px;
+}
+rect.gradient:hover{
+	fill:transparent;
+	stroke:#444;
+	cursor:pointer;
 }

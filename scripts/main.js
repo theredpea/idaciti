@@ -65,24 +65,32 @@ function showInfo(data, tabletop){
 								.rollup(function(v){ //This is an array, even though I know there is only one value
 									return v[0]/*d3.mean(v.map(_.p('coverage'))); */})
 								.entries(data);
+	svg.append('desc').text('idaciti coverage heatmap');
 
-	//TODO: Lump all below into a 'g'
-	svg.selectAll('g.concept')
+	var concepts = svg.selectAll('g.concept')
 		.data(byConceptThenCompany) //TODO: Provide a keyfunction so it is bound
 		.enter()
 		.append('g')
 		.classed('concept', true)
 		.attr('transform', function(d, i){ return 'translate(0,'+i*blockHeight+')'; })
-		.selectAll('rect.coverage')
+		.selectAll('g.coverage')
 			.data(function(coverageByConcept){ return coverageByConcept.values; })
 			.enter()
-			.append('rect')
-			.classed('coverage', true)
-			.attr('x', function(d, i){ return i*blockHeight })
-			.attr('width', blockHeight).attr('height', blockHeight)	//Squares
+			.append('g')
+			.attr('class','coverage')
+			.attr('transform', function(d, i){ return 'translate('+i*blockHeight+',0)'; })
 			.attr('data-company', function(d){ return d.values.company; })
 			.attr('data-concept',  function(d){ return d.values.concept; })
+	concepts
+			.append('rect')
+			.attr('width', blockHeight).attr('height', blockHeight)	//Squares
 			.style('fill', function(d){ console.log(d); return colorScale(d.values.coverage); });
+	concepts
+		.append('rect')
+		.attr('x', 2).attr('y',2)
+		.attr('width', blockHeight-4).attr('height', blockHeight-4)
+		.attr('class', 'gradient');
+
 			/*
 
 	svg.selectAll('text.coverage')

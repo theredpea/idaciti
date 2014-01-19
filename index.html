@@ -1,24 +1,32 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="pocApp">
 <head>
 <title>idaciti POC</title>
 <link rel="stylesheet" type="text/css" href="styles/main.css"/>
 </head>
 <body>
 
-<form id="filters" ng-controller="FiltersCtrl">
+<form id="filters" ng-controller="FilterCtrl">
 	<fieldset>
 		<legend>Industries</legend>
-		<select name="industries">
-			<option value="None" >Pick an industry</option>
-			<option ng-repeat="industry in industries" >{{industry}}</option>
-		</select>
+		<select 
+			ng-model="selectedindustry" 
+			ng-options="industry for industry in industries"></select>
+			<p ng-bind-template="{{selectedindustry}}"></p>
 	</fieldset>
 	<fieldset>
 		<legend>Companies</legend>
+		<select 
+			ng-model="selectedcompany" 
+			ng-options="company for company in companies"></select>
+			<p ng-bind-template="{{selectedcompany}}"></p>
 	</fieldset>
 	<fieldset>
 		<legend>Statements</legend>
+		<select 
+			ng-model="selectedstatement" 
+			ng-options="statement for statement in statements"></select>
+			<p ng-bind-template="{{selectedstatement}}"></p>
 	</fieldset>
 </form>
 <div id="chart">

@@ -1,6 +1,10 @@
-body,html{ height:100%; }
-#filters{width:100%;
-height:100px;}
+body,html{ 
+	height:100%; 
+}
+#filters{
+	width:100%;
+	height:100px;
+}
 #chart,#storyboard{
 	float:left;
 	width:50%;
@@ -13,6 +17,7 @@ body{
 	background: -webkit-linear-gradient(#000,#222);
 	font-family:'Myriad Pro',sans-serif;
 	font-size:2em;
+	color:white;
 }
 
 rect{
@@ -34,6 +39,9 @@ fieldset{
 	background-color:black;
 	border:none;
 	margin:0px 20px;
+}
+select{
+	font-size:0.75em;
 }
 legend{
 	color:white;

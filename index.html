@@ -55,12 +55,35 @@
 			{{company}}
 			</span>
 		</div>
-		<!--
-		<select 
-			ng-model="selectedcompany" 
-			ng-options="company for company in companies"></select>
-			<p ng-bind-template="{{selectedcompany}}"></p>
-		-->
+	</fieldset>
+	<fieldset>
+		<legend>Concepts</legend>
+		<p class="filter-length">Displaying 
+				<span class="display length">{{ displayLength('concepts') }}</span> 
+				of  <span class="total length">{{ concepts.length }}</span>
+		</p> 
+		<input type="text" ng-model="conceptSearch"></input>
+		<ul>
+			<li 
+					class="ng-cloak" 
+					ng-repeat="concept in filtersconcepts =(concepts | filter:conceptSearch | limitTo: displayLimit)"> 
+					<!--https://groups.google.com/forum/#!topic/angular/7WY_BmFzd3U-->
+					<input type="checkbox" 
+						ng-model="selectedconceptsSet[concept]"></input> 
+						<!-- 
+						ng-change="selectFromSet('selectedcompanies')False means angular.identity will filter these out -->
+					<span>{{concept}}</span>
+			</li>
+		</ul>
+		<div>
+			<span 
+				class="selected" 
+				ng-repeat="concept in selectedconceptsSet 
+				| keysWhereValueTruthy 
+				| orderBy: _.i">	<!--Why doesn't angular.identity work? -->
+			{{concept}}
+			</span>
+		</div>
 	</fieldset>
 </form>
 <div id="chart">

@@ -52,6 +52,7 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 
 	var fakeDataUrl = 'https://docs.google.com/spreadsheet/pub?key=0Alf4pwCG7soMdENIckJnYTVScllWcnI0UHoweWhTcnc&single=true&gid=0&output=html';
 
+	$scope.data = [];
 
 	Tabletop.init({
 		key:fakeDataUrl,
@@ -60,22 +61,30 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 		parseNumbers:true
 	});
 
-	$scope.data = [];
 	function drawChart(d){
-		$scope.data = data = d || $scope.data;
 		if (d) { //Fresh data
 
+			$scope.data = d;
 			$scope.categories.forEach(function(e,i){
 					$scope[e[0]] = d3.set(d.map(_.p(e[1]))).values();
 				});
 
-				//http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/#
-				$scope.$apply(); //Updates the view
-				//Only do this the first time, when data is passed (if (d))
-				//$watches trigger this function the other times
+			angular.forEach($scope.concepts, function(_){
+				$scope.selectedconceptsSet[_]=true;
+			});
+
+			$scope.coverages = d.map(_.p('coverage'));
+			$scope.maxCoverage = d3.max($scope.coverages);
+			$scope.minCoverage = d3.min($scope.coverages);
+
+			$scope.colorScale = d3.scale.linear()
+							.domain([$scope.minCoverage,$scope.maxCoverage])
+							.range(['red', 'green']);
+			//http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/#
+			$scope.$apply(); //Updates the view
+			//Only do this the first time, when data is passed (if (d))
+			//$watches trigger this function the other times
 		}
-
-
 		//TODO:
 		//1) DRY the "fieldset" and "legend" on view; just specify the field and ng-repeat the rest? But Industry may have special checkboxes
 		//2) Alternative to d3.set().values() the unique 
@@ -84,107 +93,127 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 		var width=600,
 			height=600,
 			margin= {left:20, right:20, top:20, bottom:200},
-			blockHeight = (height-margin.top-margin.bottom) / $scope.concepts.length,
+			blockHeight = (height-margin.top-margin.bottom) / keysWhereValueTruthy($scope.selectedconceptsSet).length,
 			blockWidth = blockHeight,
-			coverages = data.map(_.p('coverage')),
-			maxCoverage = d3.max(coverages),
-			minCoverage = d3.min(coverages),
-			colorScale = d3.scale.linear()
-							.domain([minCoverage, maxCoverage])
-							.range(['red', 'green']),
 			rowLabelWidth= 200;
 
-		var svg = d3.select('#chart svg')
-					.attr('width', width)
-					.attr('height', height);
-
-		var canvas =$scope.canvas = $scope.canvas  || svg.select('g')
-				.append('g')
-					.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 		if (d){
-				canvas.append('desc')
+
+			var svg = d3.select('#chart svg')
+						.attr('width', width)
+						.attr('height', height);
+
+			$scope.canvas =  svg.select('g')
+					.append('g')
+						.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+			//TODO:These shouldn't repeat even if there is new d
+			$scope.canvas
+				.append('desc')
 					.text('idaciti coverage heatmap')
 				.append('text')
 					.attr('class', 'title')
 					.attr('dy', '.71em');
-					//.text('Concept Heat Map');
+				//.text('Concept Heat Map');
+
+			$scope.byConceptThenCompany =  d3
+										.nest()
+										.key(_.p('concept'))
+										.key(_.p('company')) //TODO: sort?
+										.rollup(function(v){ //This is an array, even though I know there is only one value
+											return v[0]/*d3.mean(v.map(_.p('coverage'))); */})
+										.map($scope.data); //.entries(data);
 
 		}
+		if ($scope.canvas){
 
-		var byConceptThenCompany = $scope.byConceptThenCompany = $scope.byConceptThenCompany || d3
-									.nest()
-									.key(_.p('concept'))
-									.key(_.p('company')) //TODO: sort?
-									.rollup(function(v){ //This is an array, even though I know there is only one value
-										return v[0]/*d3.mean(v.map(_.p('coverage'))); */})
-									.map($scope.data); //.entries(data);
-		
+			var concepts = $scope.canvas.selectAll('g.concept')
+				.data(keysWhereValueTruthy($scope.selectedconceptsSet), _.i);
 
-		var concepts = canvas.selectAll('g.concept')
-			.data(keysWhereValueTruthy($scope.selectedconceptsSet)) //TODO: Provide a keyfunction so it is bound
-			.enter()
-			.append('g')
-			.attr('class','concept')
-			.attr('transform', function(d, i){ return 'translate('+rowLabelWidth+','+i*blockHeight+')'; });
-		
-		var leftAligned = 1;
-		//ROW LABELS
-		concepts
-			.append('text')
-			.attr('class', 'label')
-			.style('text-anchor', leftAligned ?  'start' : 'end') //right-alignment
-			//.attr('textLength', rowLabelWidth) //Like letter-spacing;
-			.attr('dy', 30)
-			.attr('x', -5 -(leftAligned*rowLabelWidth))
-			.text(function(concept){ return concept; });
-
-		var coverage = concepts
-			.selectAll('g.coverage')
-				.data(function(concept, i){ return keysWhereValueTruthy($scope.selectedcompaniesSet).map(function(co){return {concept: concept, company:co};})}) //function(coverageByConcept){ return coverageByConcept.values; })
+			concepts
 				.enter()
+				.append('g')
+				.attr('class','concept')
+				.attr('transform', function(d, i){ return 'translate('+rowLabelWidth+','+i*blockHeight+')'; });
+
+			concepts
+				.exit()
+				.remove();
+			
+			var leftAligned = 1;
+			//ROW LABELS
+			concepts
+				.append('text')
+				.attr('class', 'label')
+				.style('text-anchor', leftAligned ?  'start' : 'end') //right-alignment
+				//.attr('textLength', rowLabelWidth) //Like letter-spacing;
+				.attr('dy', 30)
+				.attr('x', -5 -(leftAligned*rowLabelWidth))
+				.text(function(concept){ 
+					console.log(concept);
+					return concept; });
+
+			var coverages = concepts
+					.selectAll('g.coverage')
+					.data(function(concept, i){ 
+						return keysWhereValueTruthy($scope.selectedcompaniesSet).map(function(co){
+							return {concept: concept, company:co};})}, _.i); //function(coverageByConcept){ return coverageByConcept.values; })
+			
+			coverages.enter()
 				.append('g')
 				.attr('class','coverage')
 				.attr('transform', function(d, i){ return 'translate('+i*blockWidth+',0)'; })
 				.attr('data-company', _.p('company'))
 				.attr('data-concept', _.p('concept'));
+				
+			coverages
+				.exit()
+				.remove();
 
+			coverages
+					.append('rect')
+					.attr('width', blockHeight).attr('height', blockHeight)	//Squares
+					.style('fill', function(coverage){ 
+						var byCompany=$scope.byConceptThenCompany[coverage.concept];
+						console.log(byCompany);
+						var forCompany = byCompany[coverage.company];
+						console.log(forCompany);
+						console.log($scope.colorScale(forCompany.coverage));
+						return $scope.colorScale(forCompany.coverage); 
+					});
 
-		coverage
+			coverages
 				.append('rect')
-				.attr('width', blockHeight).attr('height', blockHeight)	//Squares
-				.style('fill', function(coverage){ return colorScale(byConceptThenCompany[coverage.concept][coverage.company].coverage); });
-		coverage
-			.append('rect')
-			.attr('x', 2).attr('y',2)
-			.attr('width', blockHeight-4).attr('height', blockHeight-4)
-			.attr('class', 'gradient');
+				.attr('x', 2).attr('y',2)
+				.attr('width', blockHeight-4).attr('height', blockHeight-4)
+				.attr('class', 'gradient');
 
-		var companyLabelYOffset=($scope.concepts.length)*blockHeight;
-		var coData = []
-		var companyLabels = canvas
-			.selectAll('text.company.label')
-			.data(coData= keysWhereValueTruthy($scope.selectedcompaniesSet), _.i);
-		//console.log(coData);
-		companyLabels
-			.enter()
-			.append('text')
-			.attr('class', 'company label')
-			.text(_.i)
-			.attr('y', companyLabelYOffset)
-			.attr('dy', 20)
-			.attr('dx', 20)
-			
-		companyLabels
-			.transition()
-			.attr('transform', function(d,i){ return 'rotate(20 '+ (rowLabelWidth + i*blockWidth) + ' ' + companyLabelYOffset +')' })
-			.attr('x', function(d,i){ console.log(d); console.log(i); return (rowLabelWidth + i*blockWidth) })
-			
+			var companyLabelYOffset=($scope.concepts.length)*blockHeight;
 
-		companyLabels
-			.exit()
-			.transition()
-			.attr('transform', function(d,i){ return 'rotate(0 '+ (rowLabelWidth + i*blockWidth) + ' ' + companyLabelYOffset +')' })
-			.remove();
+			var companyLabels = $scope.canvas
+				.selectAll('text.company.label')
+				.data(keysWhereValueTruthy($scope.selectedcompaniesSet), _.i);
+			//console.log(coData);
+			companyLabels
+				.enter()
+				.append('text')
+				.attr('class', 'company label')
+				.text(_.i)
+				.attr('y', companyLabelYOffset)
+				.attr('dy', 20)
+				.attr('dx', 20)
+				
+			companyLabels
+				.transition()
+				.attr('transform', function(d,i){ return 'rotate(20 '+ (rowLabelWidth + i*blockWidth) + ' ' + companyLabelYOffset +')' })
+				.attr('x', function(d,i){ console.log(d); console.log(i); return (rowLabelWidth + i*blockWidth) })
+				
+
+			companyLabels
+				.exit()
+				.transition()
+				.attr('transform', function(d,i){ return 'rotate(0 '+ (rowLabelWidth + i*blockWidth) + ' ' + companyLabelYOffset +')' })
+				.remove();
+		}
 
 	};
 

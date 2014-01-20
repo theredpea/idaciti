@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html ng-app="pocApp">
 <head>
-<title>idaciti POC</title>
-<link rel="stylesheet" type="text/css" href="styles/main.css"/>
+	<title>idaciti POC</title>
+	<link rel="stylesheet" type="text/css" href="styles/main.css"/>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+	<!-- For best results http://docs.angularjs.org/api/ng.directive:ngCloak -->
 </head>
 <body>
 
 <form id="filters" ng-controller="FilterCtrl">
+<!-- GROUPED FIELDS; add back later
 	<fieldset>
 		<legend>Industries</legend>
 		<select 
@@ -15,18 +19,35 @@
 			<p ng-bind-template="{{selectedindustry}}"></p>
 	</fieldset>
 	<fieldset>
-		<legend>Companies</legend>
-		<select 
-			ng-model="selectedcompany" 
-			ng-options="company for company in companies"></select>
-			<p ng-bind-template="{{selectedcompany}}"></p>
-	</fieldset>
-	<fieldset>
 		<legend>Statements</legend>
 		<select 
 			ng-model="selectedstatement" 
 			ng-options="statement for statement in statements"></select>
 			<p ng-bind-template="{{selectedstatement}}"></p>
+	</fieldset>
+	-->
+	<!--TODO: Turn into directives -->
+	<fieldset>
+		<legend>Companies</legend>
+		<input type="text" ng-model="companySearch"></input>
+		<p>Displaying 
+				<span class="display length">{{ displayLength('companies') }}</span> 
+				of  <span class="total length">{{ companies.length }}</span>
+		</p> 
+		<ul>
+			<li 
+					class="ng-cloak" 
+					ng-repeat="company in filteredcompanies =(companies | filter:companySearch | limitTo: displayLimit)">
+					<input type="checkbox" ng-bind="selectedcompanies[company]"></input>
+					<span>{{company}}</span>
+			</li>
+		</ul>
+		<!--
+		<select 
+			ng-model="selectedcompany" 
+			ng-options="company for company in companies"></select>
+			<p ng-bind-template="{{selectedcompany}}"></p>
+		-->
 	</fieldset>
 </form>
 <div id="chart">
@@ -46,7 +67,6 @@
 <!--REGION SCRIPTS -->
 <!--Submodule-->
 	<script src="tabletop/src/tabletop.js" type="text/javascript"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
 
 	<!--Hosted-->
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>

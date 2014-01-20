@@ -8,10 +8,17 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 			['statements', 'statement'], 
 			['concepts', 'concept']];
 	$scope.categories.forEach(function(e,i){
-		$scope[e[0]]=[e[1]+' one'];
-		$scope['selected'+e[1]] = undefined;
+		$scope[e[0]]=[];//[e[1]+' one'];
+		$scope['selected'+e[0]] = [];
+		$scope['filtered'+e[0]] = [];
 	});
+	$scope.displayLimit = 3;
 
+	$scope.displayLength = function(exp){
+		a = $scope.displayLimit;
+		b = $scope['filtered'+exp].length;
+		return Math.min(a,b)
+	}
 	$scope.strip = function(_){ 
 		result =  _.replace(/ /g, '');  
 		return result; 

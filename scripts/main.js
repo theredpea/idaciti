@@ -1,38 +1,48 @@
 var pocApp = angular.module('pocApp', []);
 var data =[];
 
-pocApp.filter('keysWhereValueTruthy', function(){
-	return function(map){
+keysWhereValueTruthy = function(map){
 		results=[];
 		angular.forEach(map, function(value, key){
 			if(value)results.push(key);
 		})
 		return results;
-	}
+	};
+
+pocApp.filter('keysWhereValueTruthy', function(){
+	return keysWhereValueTruthy;
 });
 
-pocApp.controller('FilterCtrl', ['$scope', function($scope){
+pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 	window.scope = $scope;
 	$scope._ = _;
 	$scope.categories = [['companies', 'company'], 
 			['industries', 'industry'],
 			['statements', 'statement'], 
 			['concepts', 'concept']];
+	var watchSelecteds = [];
 	$scope.categories.forEach(function(e,i){
 		$scope[e[0]]=[];//[e[1]+' one'];
-		$scope['selected'+e[0]] = [];
-		$scope['selected'+e[0] +'Set'] = {};
+		var selectedSetName = 'selected'+e[0] +'Set'
+		$scope[selectedSetName] = {};
+		watchSelecteds.push(selectedSetName);
 		$scope['filtered'+e[0]] = [];
-	});
+	});	
+	angular.forEach(watchSelecteds, function(selected){ 
+		//console.log('watching ' + selected);
+		$scope.$watch(selected, function(){
+			//console.log(selected + ' changed, so its watch is firing');
 
+			drawChart();
+		}, true); //
+	});
 	$scope.displayLimit = 3;
-	$scope.selectFromSet = function(selectToList){
-		$scope[selectToList] = Object.keys($scope[selectToList+'Set']);
-	}
 
 	$scope.displayLength = function(exp){
 		a = $scope.displayLimit;
+		//https://groups.google.com/forum/#!topic/angular/7WY_BmFzd3U
 		b = $scope['filtered'+exp].length;
+
 		return Math.min(a,b)
 	}
 	$scope.strip = function(_){ 
@@ -50,14 +60,21 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 		parseNumbers:true
 	});
 
+	$scope.data = [];
 	function drawChart(d){
-		data = d;
-		$scope.categories.forEach(function(e,i){
-				$scope[e[0]] = d3.set(d.map(_.p(e[1]))).values();
-			});
+		$scope.data = data = d || $scope.data;
+		if (d) { //Fresh data
 
-		//http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/#
-		$scope.$apply(); //Updates the view
+			$scope.categories.forEach(function(e,i){
+					$scope[e[0]] = d3.set(d.map(_.p(e[1]))).values();
+				});
+
+				//http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/#
+				$scope.$apply(); //Updates the view
+				//Only do this the first time, when data is passed (if (d))
+				//$watches trigger this function the other times
+		}
+
 
 		//TODO:
 		//1) DRY the "fieldset" and "legend" on view; just specify the field and ng-repeat the rest? But Industry may have special checkboxes
@@ -67,8 +84,7 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 		var width=600,
 			height=600,
 			margin= {left:20, right:20, top:20, bottom:200},
-			concepts = d3.set(data.map(function(d){return d.concept})).values(),
-			blockHeight = (height-margin.top-margin.bottom) / concepts.length,
+			blockHeight = (height-margin.top-margin.bottom) / $scope.concepts.length,
 			blockWidth = blockHeight,
 			coverages = data.map(_.p('coverage')),
 			maxCoverage = d3.max(coverages),
@@ -82,28 +98,30 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 					.attr('width', width)
 					.attr('height', height);
 
-		var canvas= svg.select('g')
+		var canvas =$scope.canvas = $scope.canvas  || svg.select('g')
 				.append('g')
 					.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-		var title = canvas.append('text')
+		if (d){
+				canvas.append('desc')
+					.text('idaciti coverage heatmap')
+				.append('text')
 					.attr('class', 'title')
 					.attr('dy', '.71em');
 					//.text('Concept Heat Map');
 
-		var byConceptThenCompany = d3
+		}
+
+		var byConceptThenCompany = $scope.byConceptThenCompany = $scope.byConceptThenCompany || d3
 									.nest()
 									.key(_.p('concept'))
 									.key(_.p('company')) //TODO: sort?
 									.rollup(function(v){ //This is an array, even though I know there is only one value
 										return v[0]/*d3.mean(v.map(_.p('coverage'))); */})
-									.map(data); //.entries(data);
-		canvas
-			.append('desc')
-			.text('idaciti coverage heatmap');
+									.map($scope.data); //.entries(data);
+		
 
 		var concepts = canvas.selectAll('g.concept')
-			.data($scope.concepts) //TODO: Provide a keyfunction so it is bound
+			.data(keysWhereValueTruthy($scope.selectedconceptsSet)) //TODO: Provide a keyfunction so it is bound
 			.enter()
 			.append('g')
 			.attr('class','concept')
@@ -122,7 +140,7 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 
 		var coverage = concepts
 			.selectAll('g.coverage')
-				.data(function(concept, i){ return $scope.companies.map(function(co){return {concept: concept, company:co};})}) //function(coverageByConcept){ return coverageByConcept.values; })
+				.data(function(concept, i){ return keysWhereValueTruthy($scope.selectedcompaniesSet).map(function(co){return {concept: concept, company:co};})}) //function(coverageByConcept){ return coverageByConcept.values; })
 				.enter()
 				.append('g')
 				.attr('class','coverage')
@@ -142,18 +160,31 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 			.attr('class', 'gradient');
 
 		var companyLabelYOffset=($scope.concepts.length)*blockHeight;
-		canvas
+		var coData = []
+		var companyLabels = canvas
 			.selectAll('text.company.label')
-			.data($scope.companies)
+			.data(coData= keysWhereValueTruthy($scope.selectedcompaniesSet), _.i);
+		//console.log(coData);
+		companyLabels
 			.enter()
 			.append('text')
 			.attr('class', 'company label')
-			.attr('x', function(d,i){ return (rowLabelWidth + i*blockWidth) })
+			.text(_.i)
 			.attr('y', companyLabelYOffset)
 			.attr('dy', 20)
 			.attr('dx', 20)
+			
+		companyLabels
+			.transition()
 			.attr('transform', function(d,i){ return 'rotate(20 '+ (rowLabelWidth + i*blockWidth) + ' ' + companyLabelYOffset +')' })
-			.text(function(co){return co;});
+			.attr('x', function(d,i){ console.log(d); console.log(i); return (rowLabelWidth + i*blockWidth) })
+			
+
+		companyLabels
+			.exit()
+			.transition()
+			.attr('transform', function(d,i){ return 'rotate(0 '+ (rowLabelWidth + i*blockWidth) + ' ' + companyLabelYOffset +')' })
+			.remove();
 
 	};
 

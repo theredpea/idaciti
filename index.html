@@ -29,15 +29,16 @@
 	<!--TODO: Turn into directives -->
 	<fieldset>
 		<legend>Companies</legend>
-		<input type="text" ng-model="companySearch"></input>
-		<p>Displaying 
+		<p class="filter-length">Displaying 
 				<span class="display length">{{ displayLength('companies') }}</span> 
 				of  <span class="total length">{{ companies.length }}</span>
 		</p> 
+		<input type="text" ng-model="companySearch"></input>
 		<ul>
 			<li 
 					class="ng-cloak" 
-					ng-repeat="company in filteredcompanies =(companies | filter:companySearch | limitTo: displayLimit)">
+					ng-repeat="company in filteredcompanies =(companies | filter:companySearch | limitTo: displayLimit)"> 
+					<!--https://groups.google.com/forum/#!topic/angular/7WY_BmFzd3U-->
 					<input type="checkbox" ng-bind="selectedcompanies[company]"></input>
 					<span>{{company}}</span>
 			</li>

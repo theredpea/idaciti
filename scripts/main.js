@@ -1,8 +1,19 @@
 var pocApp = angular.module('pocApp', []);
 var data =[];
 
-pocApp.controller('FilterCtrl', ['$scope', function($scope){
+pocApp.filter('keysWhereValueTruthy', function(){
+	return function(map){
+		results=[];
+		angular.forEach(map, function(value, key){
+			if(value)results.push(key);
+		})
+		return results;
+	}
+});
 
+pocApp.controller('FilterCtrl', ['$scope', function($scope){
+	window.scope = $scope;
+	$scope._ = _;
 	$scope.categories = [['companies', 'company'], 
 			['industries', 'industry'],
 			['statements', 'statement'], 
@@ -10,9 +21,14 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 	$scope.categories.forEach(function(e,i){
 		$scope[e[0]]=[];//[e[1]+' one'];
 		$scope['selected'+e[0]] = [];
+		$scope['selected'+e[0] +'Set'] = {};
 		$scope['filtered'+e[0]] = [];
 	});
+
 	$scope.displayLimit = 3;
+	$scope.selectFromSet = function(selectToList){
+		$scope[selectToList] = Object.keys($scope[selectToList+'Set']);
+	}
 
 	$scope.displayLength = function(exp){
 		a = $scope.displayLimit;
@@ -155,4 +171,5 @@ _.p=function(propName){
 	}
 };
  //Identity function
-_.i = function(_){ return _; }
+ //But there is http://docs.angularjs.org/api/angular.identity
+_.i = function(_){  return _; }

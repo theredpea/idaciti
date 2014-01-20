@@ -39,10 +39,22 @@
 					class="ng-cloak" 
 					ng-repeat="company in filteredcompanies =(companies | filter:companySearch | limitTo: displayLimit)"> 
 					<!--https://groups.google.com/forum/#!topic/angular/7WY_BmFzd3U-->
-					<input type="checkbox" ng-bind="selectedcompanies[company]"></input>
+					<input type="checkbox" 
+						ng-model="selectedcompaniesSet[company]"></input> 
+						<!-- 
+						ng-change="selectFromSet('selectedcompanies')False means angular.identity will filter these out -->
 					<span>{{company}}</span>
 			</li>
 		</ul>
+		<div>
+			<span 
+				class="selected" 
+				ng-repeat="company in selectedcompaniesSet 
+				| keysWhereValueTruthy 
+				| orderBy: _.i">	<!--Why doesn't angular.identity work? -->
+			{{company}}
+			</span>
+		</div>
 		<!--
 		<select 
 			ng-model="selectedcompany" 

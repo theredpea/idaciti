@@ -73,3 +73,14 @@ li{
 	font-size:0.75em;
 	margin:0px;
 }
+.selected{
+	display:inline-block;
+	float:left;
+	font-size:0.75em;
+	background-color:#7BE21D;
+	color:black;
+	border-radius:2px;
+	margin:2px;
+	font-weight:bold;
+	padding:5px;
+}

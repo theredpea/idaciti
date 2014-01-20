@@ -19,7 +19,7 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 
 	var fakeDataUrl = 'https://docs.google.com/spreadsheet/pub?key=0Alf4pwCG7soMdENIckJnYTVScllWcnI0UHoweWhTcnc&single=true&gid=0&output=html';
 
-	
+
 	Tabletop.init({
 		key:fakeDataUrl,
 		callback: loadValues,
@@ -35,6 +35,11 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 
 		//http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/#
 		$scope.$apply(); //Updates the view
+
+		//TODO:
+		//1) DRY the "fieldset" and "legend" on view; just specify the field and ng-repeat the rest? But Industry may have special checkboxes
+		//2) Alternative to d3.set().values() the unique 
+		//3) A multiselect; 
 
 		var width=400,
 			height=400,

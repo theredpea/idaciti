@@ -51,7 +51,8 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 			minCoverage = d3.min(coverages),
 			colorScale = d3.scale.linear()
 							.domain([minCoverage, maxCoverage])
-							.range(['red', 'green']);
+							.range(['red', 'green']),
+			rowLabelWidth= 200;
 
 		
 		var svg= d3.select('#chart svg g')
@@ -76,8 +77,19 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 			.data(byConceptThenCompany) //TODO: Provide a keyfunction so it is bound
 			.enter()
 			.append('g')
-			.classed('concept', true)
-			.attr('transform', function(d, i){ return 'translate(0,'+i*blockHeight+')'; })
+			.attr('class','concept')
+			.attr('transform', function(d, i){ return 'translate('+rowLabelWidth+','+i*blockHeight+')'; });
+		
+		var leftAligned = 1;
+		concepts
+			.append('text')
+			.attr('class', 'label')
+			.attr('text-anchor', leftAligned ?  'start' : 'end') //right-alignment
+			.attr('dy', 30)
+			.attr('x', -5 -(leftAligned*rowLabelWidth))
+			.text(function(coverageByConcept,i){ return coverageByConcept.key; });
+
+		var coverage = concepts
 			.selectAll('g.coverage')
 				.data(function(coverageByConcept){ return coverageByConcept.values; })
 				.enter()
@@ -85,16 +97,20 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 				.attr('class','coverage')
 				.attr('transform', function(d, i){ return 'translate('+i*blockHeight+',0)'; })
 				.attr('data-company', function(d){ return d.values.company; })
-				.attr('data-concept',  function(d){ return d.values.concept; })
-		concepts
+				.attr('data-concept',  function(d){ return d.values.concept; });
+
+
+		coverage
 				.append('rect')
 				.attr('width', blockHeight).attr('height', blockHeight)	//Squares
 				.style('fill', function(d){ return colorScale(d.values.coverage); });
-		concepts
+		coverage
 			.append('rect')
 			.attr('x', 2).attr('y',2)
 			.attr('width', blockHeight-4).attr('height', blockHeight-4)
 			.attr('class', 'gradient');
+
+
 
 				/*
 

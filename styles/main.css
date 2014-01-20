@@ -47,3 +47,11 @@ legend{
 	color:white;
 
 }
+
+svg text{
+	fill:white;
+}
+.concept .label{
+	font-size:0.75em;
+	letter-spacing:-1px;
+}

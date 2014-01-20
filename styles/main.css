@@ -51,7 +51,13 @@ legend{
 svg text{
 	fill:white;
 }
-.concept .label{
+.label{
 	font-size:0.75em;
-	letter-spacing:-1px;
+	letter-spacing:-1px;  
+	
+
+	/* Dont' work... 
+	text-align:right; Use text-anchor property; programmatic because it's used in other placements
+	padding-top:10px;
+	*/
 }

@@ -22,12 +22,12 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 
 	Tabletop.init({
 		key:fakeDataUrl,
-		callback: loadValues,
+		callback: drawChart,
 		simpleSheet: true,
 		parseNumbers:true
 	});
 
-	function loadValues(d){
+	function drawChart(d){
 		data = d;
 		$scope.categories.forEach(function(e,i){
 				$scope[e[0]] = d3.set(d.map(_.p(e[1]))).values();
@@ -41,11 +41,12 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 		//2) Alternative to d3.set().values() the unique 
 		//3) A multiselect; 
 
-		var width=400,
-			height=400,
-			margin= {left:20, right:20, top:20, bottom:20},
+		var width=600,
+			height=600,
+			margin= {left:20, right:20, top:20, bottom:200},
 			concepts = d3.set(data.map(function(d){return d.concept})).values(),
 			blockHeight = (height-margin.top-margin.bottom) / concepts.length,
+			blockWidth = blockHeight,
 			coverages = data.map(_.p('coverage')),
 			maxCoverage = d3.max(coverages),
 			minCoverage = d3.min(coverages),
@@ -54,12 +55,15 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 							.range(['red', 'green']),
 			rowLabelWidth= 200;
 
-		
-		var svg= d3.select('#chart svg g')
+		var svg = d3.select('#chart svg')
+					.attr('width', width)
+					.attr('height', height);
+
+		var canvas= svg.select('g')
 				.append('g')
 					.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-		var title = svg.append('text')
+		var title = canvas.append('text')
 					.attr('class', 'title')
 					.attr('dy', '.71em');
 					//.text('Concept Heat Map');
@@ -71,9 +75,11 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 									.rollup(function(v){ //This is an array, even though I know there is only one value
 										return v[0]/*d3.mean(v.map(_.p('coverage'))); */})
 									.entries(data);
-		svg.append('desc').text('idaciti coverage heatmap');
+		canvas
+			.append('desc')
+			.text('idaciti coverage heatmap');
 
-		var concepts = svg.selectAll('g.concept')
+		var concepts = canvas.selectAll('g.concept')
 			.data(byConceptThenCompany) //TODO: Provide a keyfunction so it is bound
 			.enter()
 			.append('g')
@@ -84,7 +90,8 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 		concepts
 			.append('text')
 			.attr('class', 'label')
-			.attr('text-anchor', leftAligned ?  'start' : 'end') //right-alignment
+			.style('text-anchor', leftAligned ?  'start' : 'end') //right-alignment
+			//.attr('textLength', rowLabelWidth) //Like letter-spacing;
 			.attr('dy', 30)
 			.attr('x', -5 -(leftAligned*rowLabelWidth))
 			.text(function(coverageByConcept,i){ return coverageByConcept.key; });
@@ -95,7 +102,7 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 				.enter()
 				.append('g')
 				.attr('class','coverage')
-				.attr('transform', function(d, i){ return 'translate('+i*blockHeight+',0)'; })
+				.attr('transform', function(d, i){ return 'translate('+i*blockWidth+',0)'; })
 				.attr('data-company', function(d){ return d.values.company; })
 				.attr('data-concept',  function(d){ return d.values.concept; });
 
@@ -110,44 +117,34 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 			.attr('width', blockHeight-4).attr('height', blockHeight-4)
 			.attr('class', 'gradient');
 
-
-
-				/*
-
-		svg.selectAll('text.coverage')
-			.data(conceptAverage)//TODO: Provide a keyfunction so it is bound
+		var companyLabelYOffset=($scope.concepts.length)*blockHeight;
+		canvas
+			.selectAll('text.company.label')
+			.data($scope.companies)
 			.enter()
 			.append('text')
-			.attr('y', function(d, i){ return i*blockHeight })
-			.attr('x', 0)
-			.attr('dy', '1em')
-			.attr('class', 'coverage')
-			.text(function(d){ return Math.round(d.values*100) +'%'; })
-			.style('fill', 'white')
-			.style('font-family', 'sans-serif');
+			.attr('class', 'company label')
+			.attr('x', function(d,i){ return (rowLabelWidth + i*blockWidth) })
+			.attr('y', companyLabelYOffset)
+			.attr('dy', 20)
+			.attr('dx', 20)
+			.attr('transform', function(d,i){ return 'rotate(20 '+ (rowLabelWidth + i*blockWidth) + ' ' + companyLabelYOffset +')' })
+			.text(function(co){return co;});
 
-		svg.selectAll('text.label')
-			.data(conceptAverage)//TODO: Provide a keyfunction
-			.enter()
-			.append('text')
-			.attr('y', function(d, i){ return i*blockHeight })
-			.attr('x', blockHeight)
-			.attr('dy', '1em')
-			.attr('class', 'label')
-			.text(function(d){ return d.key })
-			.style('font-family', 'sans-serif');
-
-	*/
 	};
 
 
 }]);
 
 
+/*Utility functions*/
 _={};
+
+//Property function for grouping
 _.p=function(propName){
 	return function(obj){
 		return obj[propName];
 	}
 };
-_.i = function(_){ return _; } //Identity function for nested
+ //Identity function
+_.i = function(_){ return _; }

@@ -74,19 +74,20 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 									.key(_.p('company')) //TODO: sort?
 									.rollup(function(v){ //This is an array, even though I know there is only one value
 										return v[0]/*d3.mean(v.map(_.p('coverage'))); */})
-									.entries(data);
+									.map(data); //.entries(data);
 		canvas
 			.append('desc')
 			.text('idaciti coverage heatmap');
 
 		var concepts = canvas.selectAll('g.concept')
-			.data(byConceptThenCompany) //TODO: Provide a keyfunction so it is bound
+			.data($scope.concepts) //TODO: Provide a keyfunction so it is bound
 			.enter()
 			.append('g')
 			.attr('class','concept')
 			.attr('transform', function(d, i){ return 'translate('+rowLabelWidth+','+i*blockHeight+')'; });
 		
 		var leftAligned = 1;
+		//ROW LABELS
 		concepts
 			.append('text')
 			.attr('class', 'label')
@@ -94,23 +95,23 @@ pocApp.controller('FilterCtrl', ['$scope', function($scope){
 			//.attr('textLength', rowLabelWidth) //Like letter-spacing;
 			.attr('dy', 30)
 			.attr('x', -5 -(leftAligned*rowLabelWidth))
-			.text(function(coverageByConcept,i){ return coverageByConcept.key; });
+			.text(function(concept){ return concept; });
 
 		var coverage = concepts
 			.selectAll('g.coverage')
-				.data(function(coverageByConcept){ return coverageByConcept.values; })
+				.data(function(concept, i){ return $scope.companies.map(function(co){return {concept: concept, company:co};})}) //function(coverageByConcept){ return coverageByConcept.values; })
 				.enter()
 				.append('g')
 				.attr('class','coverage')
 				.attr('transform', function(d, i){ return 'translate('+i*blockWidth+',0)'; })
-				.attr('data-company', function(d){ return d.values.company; })
-				.attr('data-concept',  function(d){ return d.values.concept; });
+				.attr('data-company', _.p('company'))
+				.attr('data-concept', _.p('concept'));
 
 
 		coverage
 				.append('rect')
 				.attr('width', blockHeight).attr('height', blockHeight)	//Squares
-				.style('fill', function(d){ return colorScale(d.values.coverage); });
+				.style('fill', function(coverage){ return colorScale(byConceptThenCompany[coverage.concept][coverage.company].coverage); });
 		coverage
 			.append('rect')
 			.attr('x', 2).attr('y',2)

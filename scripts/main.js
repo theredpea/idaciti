@@ -36,7 +36,7 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 			drawChart();
 		}, true); //
 	});
-	$scope.displayLimit = 3;
+	$scope.displayLimit = 4;
 
 	$scope.displayLength = function(exp){
 		a = $scope.displayLimit;
@@ -77,6 +77,9 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 
 			angular.forEach($scope.concepts, function(_){
 				$scope.selectedconceptsSet[_]=true;
+			});
+			angular.forEach($scope.companies, function(_){
+				$scope.selectedcompaniesSet[_]=true;
 			});
 
 			$scope.coverages = d.map(_.p('coverage'));

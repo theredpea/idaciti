@@ -68,7 +68,7 @@
 		<ul>
 			<li 
 					class="ng-cloak" 
-					ng-repeat="concept in filtersconcepts =(concepts | filter:conceptSearch | limitTo: displayLimit)"> 
+					ng-repeat="concept in filteredconcepts =(concepts | filter:conceptSearch | limitTo: displayLimit)"> 
 					<!--https://groups.google.com/forum/#!topic/angular/7WY_BmFzd3U-->
 					<input type="checkbox" 
 						ng-model="selectedconceptsSet[concept]"></input> 

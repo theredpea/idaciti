@@ -157,33 +157,37 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 				.style('text-anchor', leftAligned ?  'start' : 'end') //right-alignment
 				//.attr('textLength', rowLabelWidth) //Like letter-spacing;
 				.attr('x', -5 -(leftAligned*rowLabelWidth))
+				.attr('dy', 30)
 				.text(_.i);
-				
+
 			concepts
 				.transition()
-				.attr('transform', function(d, i){ return 'translate('+rowLabelWidth+','+i*blockHeight+')'; })
-				.attr('dy', 30);
+				.attr('transform', function(d, i){ return 'translate('+rowLabelWidth+','+i*blockHeight+')'; });
 				
+			var selectedCompanies = keysWhereValueTruthy($scope.selectedcompaniesSet);
+			console.log($scope.selectedcompaniesSet);
+			console.log(selectedCompanies);
 
-			var coverages = enterConcepts
+			var coverages = concepts
 					.selectAll('g.coverage')
 					.data(function(concept, i){ 
-						return keysWhereValueTruthy($scope.selectedcompaniesSet)
-							.map(function(co){
-								return {concept: concept, company:co};})}, function(d){ return d.concept + d.company; }); //function(coverageByConcept){ return coverageByConcept.values; })
+							return selectedCompanies
+								.map(function(co){
+									return {concept: concept, company:co};})}, 
+							function(d){ k=(d.concept + d.company); console.log(k); return k; }); //function(coverageByConcept){ return coverageByConcept.values; })
 			
-			coverages.enter()
+			var enterCoverages = coverages.enter()
 				.append('g')
 				.attr('class','coverage')
-				.attr('transform', function(d, i){ return 'translate('+i*blockWidth+',0)'; })
 				.attr('data-company', _.p('company'))
 				.attr('data-concept', _.p('concept'));
 				
-			coverages
+			var exitCoverages = coverages
 				.exit()
 				.remove();
 
 			coverages
+				.attr('transform', function(d, i){ return 'translate('+i*blockWidth+',0)'; })
 				.append('rect')
 				.attr('width', blockHeight).attr('height', blockHeight)	//Squares
 				.style('fill', function(coverage){ 

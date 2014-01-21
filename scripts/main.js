@@ -133,12 +133,13 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 		}
 		if ($scope.canvas){
 
-			var concepts = keysWhereValueTruthy($scope.selectedconceptsSet);
+			var selectedConcepts = keysWhereValueTruthy($scope.selectedconceptsSet);
+			var selectedCompanies = keysWhereValueTruthy($scope.selectedcompaniesSet);
 
-			console.log(concepts);
+
 			var concepts = $scope.canvas
 				.selectAll('g.concept')
-				.data(keysWhereValueTruthy($scope.selectedconceptsSet), _.i)
+				.data(selectedConcepts, _.i)
 
 
 			var enterConcepts = concepts
@@ -164,7 +165,6 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 				.transition()
 				.attr('transform', function(d, i){ return 'translate('+rowLabelWidth+','+i*blockHeight+')'; });
 				
-			var selectedCompanies = keysWhereValueTruthy($scope.selectedcompaniesSet);
 			console.log($scope.selectedcompaniesSet);
 			console.log(selectedCompanies);
 
@@ -186,10 +186,9 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 				.exit()
 				.remove();
 
-			coverages
-				.attr('transform', function(d, i){ return 'translate('+i*blockWidth+',0)'; })
+
+			enterCoverages
 				.append('rect')
-				.attr('width', blockHeight).attr('height', blockHeight)	//Squares
 				.style('fill', function(coverage){ 
 					var byCompany=$scope.byConceptThenCompany[coverage.concept];
 					console.log(byCompany);
@@ -199,17 +198,23 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 					return $scope.colorScale(forCompany.coverage); 
 				});
 
-			coverages
+
+			enterCoverages
 				.append('rect')
 				.attr('x', 2).attr('y',2)
 				.attr('width', blockHeight-4).attr('height', blockHeight-4)
 				.attr('class', 'gradient');
 
-			var companyLabelYOffset=($scope.concepts.length)*blockHeight;
+			coverages
+				.attr('transform', function(d, i){ return 'translate('+i*blockWidth+',0)'; })
+				.selectAll('rect')
+				.attr('width', blockHeight).attr('height', blockHeight)	//Squares
+
+			var companyLabelYOffset=selectedConcepts.length*blockHeight;
 
 			var companyLabels = $scope.canvas
 				.selectAll('text.company.label')
-				.data(keysWhereValueTruthy($scope.selectedcompaniesSet), _.i);
+				.data(selectedCompanies, _.i);
 			//console.log(coData);
 			companyLabels
 				.enter()

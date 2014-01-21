@@ -60,10 +60,16 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 		simpleSheet: true,
 		parseNumbers:true
 	});
+	backupD = [{"industry":"Manufacturing","company":"Widget Co","statement":"Income Statement","concept":"Net Income","coverage":0.713031377135628,"rowNumber":1},{"industry":"Manufacturing","company":"Widget Co","statement":"Income Statement","concept":"EPS","coverage":0.597451778850614,"rowNumber":2},{"industry":"Manufacturing","company":"Widget Co","statement":"Income Statement","concept":"Taxes","coverage":0.885005082264962,"rowNumber":3},{"industry":"Manufacturing","company":"Widget Co","statement":"Balance Sheet","concept":"Current Assets","coverage":0.81427932338672,"rowNumber":4},{"industry":"Manufacturing","company":"Widget Co","statement":"Balance Sheet","concept":"Current Liabilities","coverage":0.668083141337554,"rowNumber":5},{"industry":"Manufacturing","company":"Widget Co","statement":"Balance Sheet","concept":"Equity","coverage":0.983872997733114,"rowNumber":6},{"industry":"Manufacturing","company":"Widget Co","statement":"Cash Flow","concept":"Ops Cash","coverage":0.503628941229156,"rowNumber":7},{"industry":"Manufacturing","company":"Widget Co","statement":"Cash Flow","concept":"Investing Cash","coverage":0.817928052048897,"rowNumber":8},{"industry":"Manufacturing","company":"Widget Co","statement":"Cash Flow","concept":"Finance Cash","coverage":0.731774453039535,"rowNumber":9},{"industry":"Manufacturing","company":"Item Co","statement":"Income Statement","concept":"Net Income","coverage":0.695116113563129,"rowNumber":10},{"industry":"Manufacturing","company":"Item Co","statement":"Income Statement","concept":"EPS","coverage":0.792040468580431,"rowNumber":11},{"industry":"Manufacturing","company":"Item Co","statement":"Income Statement","concept":"Taxes","coverage":0.549167299675418,"rowNumber":12},{"industry":"Manufacturing","company":"Item Co","statement":"Balance Sheet","concept":"Current Assets","coverage":0.856883543305656,"rowNumber":13},{"industry":"Manufacturing","company":"Item Co","statement":"Balance Sheet","concept":"Current Liabilities","coverage":0.899475143421655,"rowNumber":14},{"industry":"Manufacturing","company":"Item Co","statement":"Balance Sheet","concept":"Equity","coverage":0.798416816462766,"rowNumber":15},{"industry":"Manufacturing","company":"Item Co","statement":"Cash Flow","concept":"Ops Cash","coverage":0.782817453542204,"rowNumber":16},{"industry":"Manufacturing","company":"Item Co","statement":"Cash Flow","concept":"Investing Cash","coverage":0.636150193481172,"rowNumber":17},{"industry":"Manufacturing","company":"Item Co","statement":"Cash Flow","concept":"Finance Cash","coverage":0.578087188507602,"rowNumber":18},{"industry":"REIT","company":"Land and Trust Co","statement":"Income Statement","concept":"Net Income","coverage":0.818561134162758,"rowNumber":19},{"industry":"REIT","company":"Land and Trust Co","statement":"Income Statement","concept":"EPS","coverage":0.877542751292019,"rowNumber":20},{"industry":"REIT","company":"Land and Trust Co","statement":"Income Statement","concept":"Taxes","coverage":0.832643832539318,"rowNumber":21},{"industry":"REIT","company":"Land and Trust Co","statement":"Balance Sheet","concept":"Current Assets","coverage":0.716864603588446,"rowNumber":22},{"industry":"REIT","company":"Land and Trust Co","statement":"Balance Sheet","concept":"Current Liabilities","coverage":0.778232953825121,"rowNumber":23},{"industry":"REIT","company":"Land and Trust Co","statement":"Balance Sheet","concept":"Equity","coverage":0.849529008279435,"rowNumber":24},{"industry":"REIT","company":"Land and Trust Co","statement":"Cash Flow","concept":"Ops Cash","coverage":0.963738227581395,"rowNumber":25},{"industry":"REIT","company":"Land and Trust Co","statement":"Cash Flow","concept":"Investing Cash","coverage":0.829404045676151,"rowNumber":26},{"industry":"REIT","company":"Land and Trust Co","statement":"Cash Flow","concept":"Finance Cash","coverage":0.888773647432865,"rowNumber":27},{"industry":"REIT","company":"Property Co","statement":"Income Statement","concept":"Net Income","coverage":0.838196331949038,"rowNumber":28},{"industry":"REIT","company":"Property Co","statement":"Income Statement","concept":"EPS","coverage":0.749773541456699,"rowNumber":29},{"industry":"REIT","company":"Property Co","statement":"Income Statement","concept":"Taxes","coverage":0.874028686571025,"rowNumber":30},{"industry":"REIT","company":"Property Co","statement":"Balance Sheet","concept":"Current Assets","coverage":0.995750220970868,"rowNumber":31},{"industry":"REIT","company":"Property Co","statement":"Balance Sheet","concept":"Current Liabilities","coverage":0.665042403217228,"rowNumber":32},{"industry":"REIT","company":"Property Co","statement":"Balance Sheet","concept":"Equity","coverage":0.8424907146781,"rowNumber":33},{"industry":"REIT","company":"Property Co","statement":"Cash Flow","concept":"Ops Cash","coverage":0.82196726014814,"rowNumber":34},{"industry":"REIT","company":"Property Co","statement":"Cash Flow","concept":"Investing Cash","coverage":0.730282519581698,"rowNumber":35},{"industry":"REIT","company":"Property Co","statement":"Cash Flow","concept":"Finance Cash","coverage":0.528997121562994,"rowNumber":36}]
 
 	function drawChart(d){
-		if (d) { //Fresh data
+		//console.log(JSON.stringify(d));
 
+		
+		if (d) { //Fresh data
+			console.log('fresh data');
+			console.log(d);
+			console.log('----');
 			$scope.data = d;
 			$scope.categories.forEach(function(e,i){
 					$scope[e[0]] = d3.set(d.map(_.p(e[1]))).values();
@@ -95,7 +101,8 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 			margin= {left:20, right:20, top:20, bottom:200},
 			blockHeight = (height-margin.top-margin.bottom) / keysWhereValueTruthy($scope.selectedconceptsSet).length,
 			blockWidth = blockHeight,
-			rowLabelWidth= 200;
+			rowLabelWidth= 200,
+			leftAligned = 1;
 
 		if (d){
 
@@ -126,37 +133,44 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 		}
 		if ($scope.canvas){
 
-			var concepts = $scope.canvas.selectAll('g.concept')
-				.data(keysWhereValueTruthy($scope.selectedconceptsSet), _.i);
+			var concepts = keysWhereValueTruthy($scope.selectedconceptsSet);
 
-			concepts
+			console.log(concepts);
+			var concepts = $scope.canvas
+				.selectAll('g.concept')
+				.data(keysWhereValueTruthy($scope.selectedconceptsSet), _.i)
+
+
+			var enterConcepts = concepts
 				.enter()
 				.append('g')
-				.attr('class','concept')
-				.attr('transform', function(d, i){ return 'translate('+rowLabelWidth+','+i*blockHeight+')'; });
+				.attr('class','concept');
 
-			concepts
+			var exitConcepts = concepts
 				.exit()
 				.remove();
-			
-			var leftAligned = 1;
+
 			//ROW LABELS
-			concepts
+			enterConcepts
 				.append('text')
 				.attr('class', 'label')
 				.style('text-anchor', leftAligned ?  'start' : 'end') //right-alignment
 				//.attr('textLength', rowLabelWidth) //Like letter-spacing;
-				.attr('dy', 30)
 				.attr('x', -5 -(leftAligned*rowLabelWidth))
-				.text(function(concept){ 
-					console.log(concept);
-					return concept; });
+				.text(_.i);
+				
+			concepts
+				.transition()
+				.attr('transform', function(d, i){ return 'translate('+rowLabelWidth+','+i*blockHeight+')'; })
+				.attr('dy', 30);
+				
 
-			var coverages = concepts
+			var coverages = enterConcepts
 					.selectAll('g.coverage')
 					.data(function(concept, i){ 
-						return keysWhereValueTruthy($scope.selectedcompaniesSet).map(function(co){
-							return {concept: concept, company:co};})}, _.i); //function(coverageByConcept){ return coverageByConcept.values; })
+						return keysWhereValueTruthy($scope.selectedcompaniesSet)
+							.map(function(co){
+								return {concept: concept, company:co};})}, function(d){ return d.concept + d.company; }); //function(coverageByConcept){ return coverageByConcept.values; })
 			
 			coverages.enter()
 				.append('g')
@@ -170,16 +184,16 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 				.remove();
 
 			coverages
-					.append('rect')
-					.attr('width', blockHeight).attr('height', blockHeight)	//Squares
-					.style('fill', function(coverage){ 
-						var byCompany=$scope.byConceptThenCompany[coverage.concept];
-						console.log(byCompany);
-						var forCompany = byCompany[coverage.company];
-						console.log(forCompany);
-						console.log($scope.colorScale(forCompany.coverage));
-						return $scope.colorScale(forCompany.coverage); 
-					});
+				.append('rect')
+				.attr('width', blockHeight).attr('height', blockHeight)	//Squares
+				.style('fill', function(coverage){ 
+					var byCompany=$scope.byConceptThenCompany[coverage.concept];
+					console.log(byCompany);
+					var forCompany = byCompany[coverage.company];
+					console.log(forCompany);
+					console.log($scope.colorScale(forCompany.coverage));
+					return $scope.colorScale(forCompany.coverage); 
+				});
 
 			coverages
 				.append('rect')

@@ -194,11 +194,17 @@ pocApp.controller('FilterCtrl', ['$scope', '$filter', function($scope){
 				.append('rect')
 				.style('fill', function(coverage){ 
 					var byCompany=$scope.byConceptThenCompany[coverage.concept];
-					console.log(byCompany);
+					//console.log(byCompany);
 					var forCompany = byCompany[coverage.company];
-					console.log(forCompany);
-					console.log($scope.colorScale(forCompany.coverage));
-					return $scope.colorScale(forCompany.coverage); 
+					if (forCompany && forCompany.coverage) /*Not all companies have this*/
+					{
+						/*
+						console.log(forCompany);
+						console.log($scope.colorScale(forCompany.coverage));
+						*/
+						return $scope.colorScale(forCompany.coverage); 
+					}
+					return 'black';
 				});
 
 

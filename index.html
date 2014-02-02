@@ -1,118 +1,52 @@
 <!DOCTYPE html>
-<html ng-app="pocApp">
+<html >
 <head>
 	<title>idaciti POC</title>
-	<link rel="stylesheet" type="text/css" href="styles/main.css"/>
+	<link rel="stylesheet" type="text/css" href="styles/mydata.css"/>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
 	<!-- For best results http://docs.angularjs.org/api/ng.directive:ngCloak -->
 </head>
 <body>
 
-<form id="filters" ng-controller="FilterCtrl">
-<!-- GROUPED FIELDS; add back later
-	<fieldset>
-		<legend>Industries</legend>
-		<select 
-			ng-model="selectedindustry" 
-			ng-options="industry for industry in industries"></select>
-			<p ng-bind-template="{{selectedindustry}}"></p>
-	</fieldset>
-	<fieldset>
-		<legend>Statements</legend>
-		<select 
-			ng-model="selectedstatement" 
-			ng-options="statement for statement in statements"></select>
-			<p ng-bind-template="{{selectedstatement}}"></p>
-	</fieldset>
-	-->
-	<!--TODO: Turn into directives -->
-	<fieldset>
-		<legend>Companies</legend>
-		<p class="filter-length">Displaying 
-				<span class="display length">{{ displayLength('companies') }}</span> 
-				of  <span class="total length">{{ companies.length }}</span>
-		</p> 
-		<input type="text" ng-model="companySearch"></input>
-		<ul>
-			<li 
-					class="ng-cloak" 
-					ng-repeat="company in filteredcompanies =(companies | filter:companySearch | limitTo: displayLimit)"> 
-					<!--https://groups.google.com/forum/#!topic/angular/7WY_BmFzd3U-->
-					<input type="checkbox" 
-						ng-model="selectedcompaniesSet[company]"></input> 
-						<!-- 
-						ng-change="selectFromSet('selectedcompanies')False means angular.identity will filter these out -->
-					<span>{{company}}</span>
-			</li>
-		</ul>
-		<!--
-		<div>
-			<span 
-				class="selected" 
-				ng-repeat="company in selectedcompaniesSet 
-				| keysWhereValueTruthy 
-				| orderBy: _.i">	
-			{{company}}
-			</span>
-		</div>
-		-->
-	</fieldset>
-	<fieldset>
-		<legend>Concepts</legend>
-		<p class="filter-length">Displaying 
-				<span class="display length">{{ displayLength('concepts') }}</span> 
-				of  <span class="total length">{{ concepts.length }}</span>
-		</p> 
-		<input type="text" ng-model="conceptSearch"></input>
-		<ul>
-			<li 
-					class="ng-cloak" 
-					ng-repeat="concept in filteredconcepts =(concepts | filter:conceptSearch | limitTo: displayLimit)"> 
-					<!--https://groups.google.com/forum/#!topic/angular/7WY_BmFzd3U-->
-					<input type="checkbox" 
-						ng-model="selectedconceptsSet[concept]"></input> 
-						<!-- 
-						ng-change="selectFromSet('selectedcompanies')False means angular.identity will filter these out -->
-					<span>{{concept}}</span>
-			</li>
-		</ul>
-		<!--
-		<div>
-			<span 
-				class="selected" 
-				ng-repeat="concept in selectedconceptsSet 
-				| keysWhereValueTruthy 
-				| orderBy: _.i">	
-			{{concept}}
-			</span>
-		</div>
-		-->
-	</fieldset>
-</form>
-<div id="chart">
-<svg>
-	<g>
-		<defs>
-			<linearGradient id="cellOverlay" >
-				<stop offset="0.8" stop-color="black" stop-opacity="0" />
-				<stop offset="1" stop-color="black" stop-opacity="0.4" />
-			</linearGradient>
-		</defs>
-	</g>
-</svg>
-</div>
-<div id="storyboard"></div>
+<nav>
+<ul>
+<li class="home">
+	<i></i>
+	<span>Home</span>
+</li>
 
-<!--REGION SCRIPTS -->
-<!--Submodule-->
-	<script src="tabletop/src/tabletop.js" type="text/javascript"></script>
+<li class="insights">
+	<i></i>
+	<span>Insights</span>
+</li>
 
-	<!--Hosted-->
-	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-	<script src="scripts/main.js" type="text/javascript"></script>
+<li class="companies">
+	<i></i>
+	<span>Companies</span>
+</li>
 
-<!--ENDREGION SCRIPTS -->
+<li class="storyboards">
+	<i></i>
+	<span>Storyboards</span>
+</li>
+
+<li class="mydata">
+	<i></i>
+	<span>MyData</span>
+</li>
+
+<li class="setup">
+	<i></i>
+	<span>Setup</span>
+</li>
+
+<li class="admin">
+	<i></i>
+	<span>Admin</span>
+
+</li>
+</ul>
+</nav>
 
 </body>
 </html>

@@ -1,0 +1,70 @@
+html, body{
+	width:100%;
+	height:100%;
+	font-family:Arial, sans-serif;
+	color:rgb(200,200,200);
+}
+body{
+	background-color:rgb(25,25,25);
+}
+html,body,nav ul{
+	margin:0px;
+	padding:0px;
+}
+nav ul{
+}
+nav li {
+	display:inline-block;
+	float:left;
+	clear:both;
+	width:128px;
+	height:128px;
+
+	list-style:none;
+	margin:0px;
+	padding:0px;
+
+}
+nav li span,
+nav li i{
+	display:block;
+	margin:auto;
+	text-align:center;
+	text-shadow:2px 2px rgb(10,10,10);
+}
+nav li i {
+	width:32px; 
+	height:32px;
+	background-image:url('images/mydata_icons.png');
+	background-size:32px auto;
+	background-repeat:no-repeat;
+	text-align:center;
+	font-size:0.5em;
+	margin-top:3em;
+	margin-bottom:1em;
+}
+.insights i{
+	background-position:0px -32px;
+}
+.companies i{
+	background-position:0px -64px;
+}
+
+.storyboards i{
+	background-position:0px -96px;
+}
+.mydata i{
+	background-position:0px -128px;
+}
+.setup i{
+	background-position:0px -160px;
+}
+.admin i{
+	background-position:0px -192px;
+}
+
+nav li:hover{
+	background-color:rgb(10,10,10);
+	cursor:pointer;
+	font-weight:bolder;
+}

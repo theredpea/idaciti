@@ -4,50 +4,113 @@
 	<title>idaciti POC</title>
 	<link rel="stylesheet" type="text/css" href="styles/mydata.css"/>
 
-	<!-- For best results http://docs.angularjs.org/api/ng.directive:ngCloak -->
+	<!--For data-grid -->
+
+      <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+      <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+
 </head>
 <body>
 
 <nav>
 
-<ul class="clearfix">
-<li class="home selected">
-	<i></i>
-	<span>Home</span>
-</li>
+	<ul class="clearfix">
+		<li class="home">
+			<i></i>
+			<span>Home</span>
+		</li>
 
-<li class="insights">
-	<i></i>
-	<span>Insights</span>
-</li>
+		<li class="insights">
+			<i></i>
+			<span>Insights</span>
+		</li>
 
-<li class="companies">
-	<i></i>
-	<span>Companies</span>
-</li>
+		<li class="companies">
+			<i></i>
+			<span>Companies</span>
+		</li>
 
-<li class="storyboards">
-	<i></i>
-	<span>Storyboards</span>
-</li>
+		<li class="storyboards">
+			<i></i>
+			<span>Storyboards</span>
+		</li>
 
-<li class="mydata">
-	<i></i>
-	<span>MyData</span>
-</li>
+		<li class="mydata selected">
+			<i></i>
+			<span>MyData</span>
+		</li>
 
-<li class="setup">
-	<i></i>
-	<span>Setup</span>
-</li>
+		<li class="setup">
+			<i></i>
+			<span>Setup</span>
+		</li>
 
-<li class="admin">
-	<i></i>
-	<span>Admin</span>
+		<li class="admin">
+			<i></i>
+			<span>Admin</span>
 
-</li>
-</ul>
+		</li>
+	</ul>
 </nav>
+<section>
+<!--
+	<h1> idaciti</h1>
+	<h2> dare to share</h2>
+	url="http://oxidexbrl.net/oxide/banks/termHistory/termHistory_data/bac_termHistory.json"
+	-->
+	<table class="easyui-treegrid" style="width:1400px;height:600px"
+			url="data/bac_termHistory.json"
+			rownumbers="true" showFooter="true"
+			idField="id" treeField="term">
+						
+			
+		<thead frozen="true">
+			<tr>
+				<th field="term" width="250">Terms</th>
+			</tr>
+		</thead>
+		<thead>
+			<tr>
+				<th colspan="4">2009</th>
+				<th colspan="4">2010</th>
+				<th colspan="4">2011</th>
+				<th colspan="4">2012</th>
+				<th colspan="4">2013</th>
+			</tr>
+			<tr>
+				<th field="2009_Q1" width="100" align="right">Q1</th>
+				<th field="2009_Q2" width="100" align="right">Q2</th>
+				<th field="2009_Q3" width="100" align="right">Q3</th>
+				<th field="2009_Q4" width="100" align="right">Q4</th>
+				
+				<th field="2010_Q1" width="100" align="right">Q1</th>
+				<th field="2010_Q2" width="100" align="right">Q2</th>
+				<th field="2010_Q3" width="100" align="right">Q3</th>
+				<th field="2010_Q4" width="100" align="right">Q4</th>
+				
+				<th field="2011_Q1" width="100" align="right">Q1</th>
+				<th field="2011_Q2" width="100" align="right">Q2</th>
+				<th field="2011_Q3" width="100" align="right">Q3</th>
+				<th field="2011_Q4" width="100" align="right">Q4</th>
+				
+				<th field="2012_Q1" width="100" align="right">Q1</th>
+				<th field="2012_Q2" width="100" align="right">Q2</th>
+				<th field="2012_Q3" width="100" align="right">Q3</th>
+				<th field="2012_Q4" width="100" align="right">Q4</th>
+				
+				<th field="2013_Q1" width="100" align="right">Q1</th>
+				<th field="2013_Q2" width="100" align="right">Q2</th>
+				<th field="2013_Q3" width="100" align="right">Q3</th>
+				<th field="2013_Q4" width="100" align="right">Q4</th>
+			</tr>
+		</thead>
+	</table>
+
+</section>
+
+
+      <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+      <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
 
 </body>
 </html>

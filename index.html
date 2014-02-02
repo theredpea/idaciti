@@ -58,10 +58,13 @@
 	<h2> dare to share</h2>
 	url="http://oxidexbrl.net/oxide/banks/termHistory/termHistory_data/bac_termHistory.json"
 	-->
-	<table class="easyui-treegrid" style="width:1400px;height:600px"
+	<table class="easyui-treegrid"
 			url="data/bac_termHistory.json"
-			rownumbers="true" showFooter="true"
-			idField="id" treeField="term">
+			rownumbers="true" 
+			showFooter="true"
+			method="get"
+			idField="id" 
+			treeField="term">
 						
 			
 		<thead frozen="true">

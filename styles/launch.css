@@ -1,0 +1,137 @@
+@font-face {
+    font-family: 'aller';
+    /*
+    src: url('/fonts/1942-webfont.eot');
+    src: url('1942-webfont.eot?#iefix') format('embedded-opentype'),
+         url('1942-webfont.woff') format('woff'),
+     */
+     src: url('fonts/Aller_Std_Bd.ttf') format('truetype');
+     /*
+         url('1942-webfont.svg#1942_report1942_report') format('svg');
+     */
+}
+@font-face {
+    font-family: 'aller-bolder';
+    src: url('fonts/AllerDisplay_Std_Rg.ttf') format('truetype');
+}
+
+
+@font-face {
+    font-family: 'aller-lighter';
+    src: url('fonts/Aller_Std_Lt.ttf') format('truetype');
+}
+h1{
+	margin-top:1em;
+	font-weight:bolder;
+	text-align:center;
+}
+h1>span{
+	white-space: nowrap;
+}
+
+html,html>body{
+	height:100%;
+	width:100%;
+}
+/*
+section.logo{
+	background-image:url('images/idaciti_logo.svg');
+	background-size:100% 100%;
+}
+*/
+img{
+	max-width:20%;
+	display:block;
+	margin:2em auto;
+}
+img.small{
+	max-width:50%;
+}
+.small{
+	display:none;
+}
+
+html>body{
+
+	font-family:aller, sans-serif;
+	color:white;
+	background-color:black;
+	background:-webkit-gradient(linear, 0% 0%, 20% 120%, from(#444), to(#000));
+	background:-moz-gradient(linear, 0% 0%, 20% 120%, from(#444), to(#000));
+	
+	background: -moz-linear-gradient(#444,#000);
+	
+}
+body>p{
+	font-family:"aller-lighter", sans-serif;
+	text-align:center;
+	margin:auto;
+	font-size:1.5em;
+	width:50%;
+}
+
+form{
+	text-align:center;
+	font-size:1.5em;
+	margin:1em;
+}
+fieldset{
+	background-color:#BFD730;
+	display:inline-block;
+}
+
+fieldset, input,button{
+	padding:0.5em;
+	border-radius:0.5em;
+}
+input{
+	width:20em;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	margin-right:0px;
+}
+input,button{
+	border:0px;
+}
+button{
+	/*
+	background:transparent;
+	*/
+	font-family:"aller-lighter";
+	color:white;
+	background-color:#594F8D;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	margin-left:0px;
+	text-shadow:0 1px 1px rgba(0, 0, 0, 0.2)
+}
+
+p.small{
+	width:90%;
+	font-size:1.5em;
+}
+
+@media screen and (max-width: 800px){
+
+	.large{
+		display:none;
+	}
+	.small{
+		display:block;
+	}
+
+	fieldset, input,button{
+		padding:0.5em;
+		border-radius:0.5em;
+	}
+	input{
+		width:100%;
+		border-bottom-left-radius:0px;
+		border-bottom-right-radius:0px;
+	}
+	button{
+		width:100%;
+		border-top-left-radius:0px;
+		border-top-right-radius:0px;
+	}
+}

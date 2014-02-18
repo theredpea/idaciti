@@ -135,3 +135,20 @@ p.small{
 		border-top-right-radius:0px;
 	}
 }
+
+footer{
+	font-family:'aller-lighter';
+	display:block;
+	text-align:center;
+}
+
+.disclaimer{
+	margin:3em;
+	font-size:1.5em;
+	text-align:justify;
+	width:auto;
+}
+iframe{
+	margin:auto;
+	display:block;
+}

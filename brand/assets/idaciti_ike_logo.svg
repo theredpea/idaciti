@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" 
+   xmlns:cc="http://creativecommons.org/ns#" 
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+   xmlns:svg="http://www.w3.org/2000/svg" 
+   xmlns="http://www.w3.org/2000/svg" 
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" 
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" 
+   width="57.245426mm" 
+   height="61.296909mm" 
+   viewBox="0 0 57.245426 61.296909" 
+   version="1.1" 
+   id="svg1415" 
+   inkscape:version="0.92.3 (2405546, 2018-03-11)" 
+   sodipodi:docname="idaciti_mike_logo.svg">
+   <defs id="defs1409">
+      <clipPath clipPathUnits="userSpaceOnUse" 
+         id="clipPath1424">
+         <path style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" 
+            d="m -3.939612,287.85274 c 0.1336358,0.40091 8.4189914,28.59784 8.4189914,28.59784 l 8.1517196,6.21402 13.430295,-15.50163 c 0,0 8.819894,-20.04522 8.552625,-19.91158 -0.267272,0.13363 -26.8605875,-6.1472 -26.8605875,-6.1472 z" 
+            id="path1426" 
+            inkscape:connector-curvature="0" />
+      </clipPath>
+      <clipPath clipPathUnits="userSpaceOnUse" 
+         id="clipPath889">
+         <rect style="opacity:1;vector-effect:none;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" 
+            id="rect891" 
+            width="60" 
+            height="60"
+            x="30"
+            y="0"  >
+
+            <!-- transform="rotate(73.792872)" -->
+            <animateTransform attributeType="xml" 
+               attributeName="transform" 
+               type="rotate" 
+               values="74 30 30;434 30 30;" 
+               keyTimes="0;1" 
+               dur="4s" 
+               repeatCount="indefinite" />
+
+         </rect>
+      </clipPath>
+   </defs>
+   <!-- <g transform="translate(18 ,18)"> -->
+   <!-- </g> -->
+   <!-- <rect style="opacity:1;vector-effect:none;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:0.13222653px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="rect2001" height="31.65934" width="29.174982" x="-86.094742" y="273.09891" ry="0" transform="rotate(-16.581403)">
+
+
+            <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 15 15" to="360 15 15" dur="1s" repeatCount="indefinite"/>
+         </rect> -->
+   <!-- 
+            <animateTransform attributeType="xml" attributeName="transform" type="translate" values="0;1;" keyTimes="0;1" calcMode="spline" dur="4s" repeatCount="indefinite" /> -->
+   <!-- additive="sum"  -->
+   <!-- 
+            <animate attributeName="width" dur="4s" repeatCount="indefinite" values="30;0;30" keyTimes="0;0.5;1" /> -->
+   <sodipodi:namedview id="base" 
+      pagecolor="#ffffff" 
+      bordercolor="#666666" 
+      borderopacity="1.0" 
+      inkscape:pageopacity="0.0" 
+      inkscape:pageshadow="2" 
+      inkscape:zoom="1.979899" 
+      inkscape:cx="230.97869" 
+      inkscape:cy="110.80168" 
+      inkscape:document-units="mm" 
+      inkscape:current-layer="layer1" 
+      showgrid="false" 
+      inkscape:window-width="1920" 
+      inkscape:window-height="1017" 
+      inkscape:window-x="-8" 
+      inkscape:window-y="-8" 
+      inkscape:window-maximized="1" 
+      fit-margin-top="0" 
+      fit-margin-left="0" 
+      fit-margin-right="0" 
+      fit-margin-bottom="0" />
+   <metadata id="metadata1412">
+      <rdf:RDF>
+         <cc:Work rdf:about="">
+            <dc:format>image/svg+xml</dc:format>
+            <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+            <dc:title></dc:title>
+         </cc:Work>
+      </rdf:RDF>
+   </metadata>
+   <g inkscape:label="Layer 1" 
+      inkscape:groupmode="layer" 
+      id="layer1">
+      <g id="g853">
+         <circle r="13.246305" 
+            cy="29.927111" 
+            cx="26.548996" 
+            id="path5432-5-9" 
+            style="opacity:1;vector-effect:none;fill:#bfd730;fill-opacity:1;stroke:none;stroke-width:0.03554503;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;enable-background:new" />
+         <path inkscape:connector-curvature="0" 
+            id="path1436" 
+            d="M 26.787747,8.0675322 A 20.236001,20.236001 0 0 0 6.5518851,28.303382 20.236001,20.236001 0 0 0 26.787747,48.540232 20.236001,20.236001 0 0 0 47.023607,28.303382 20.236001,20.236001 0 0 0 26.787747,8.0675322 Z m 0,11.5191798 a 8.7175131,8.7175131 0 0 1 8.71766,8.71667 8.7175131,8.7175131 0 0 1 -8.71766,8.71766 8.7175131,8.7175131 0 0 1 -8.71666,-8.71766 8.7175131,8.7175131 0 0 1 8.71666,-8.71667 z" 
+            style="opacity:1;vector-effect:none;fill:#4f4f4f;fill-opacity:1;stroke:none;stroke-width:0.51126152;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      </g>
+      <g id="g849" 
+         clip-path="url(#clipPath889)">
+         <circle r="13.738564" 
+            cy="29.796328" 
+            cx="27.461319" 
+            id="path5432-5-91" 
+            style="opacity:1;vector-effect:none;fill:#bfd730;fill-opacity:1;stroke:none;stroke-width:0.03686595;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;enable-background:new" />
+         <path id="path1283" 
+            d="M 27.436717,5.6202222 A 24.066104,24.066104 0 0 0 3.3705231,29.686412 24.066104,24.066104 0 0 0 27.436717,53.752602 24.066104,24.066104 0 0 0 51.502907,29.686412 24.066104,24.066104 0 0 0 27.436717,5.6202222 Z m 0.18923,13.7082298 a 10.168638,10.168638 0 0 1 10.16873,10.16873 10.168638,10.168638 0 0 1 -10.16873,10.16873 10.168638,10.168638 0 0 1 -10.16872,-10.16873 10.168638,10.168638 0 0 1 10.16872,-10.16873 z" 
+            style="opacity:1;vector-effect:none;fill:#2b2b2b;fill-opacity:1;stroke:none;stroke-width:0.53026104;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" 
+            inkscape:connector-curvature="0" />
+      </g>
+   </g>
+</svg>

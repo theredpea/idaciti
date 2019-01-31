@@ -75,9 +75,8 @@ input {
   vertical-align: middle;
 }
 
-.intro-paragraph {
-  font-size: 1.5em;
-
+.module-slugline {
+  font-size: 1.2em;
 }
 
 .idaciti-background {
@@ -132,10 +131,6 @@ html {
 
 .header {
   padding: 0 200px;
-}
-
-.body {
-  padding-top: 20px;
 }
 
 .drawing-container {
@@ -426,7 +421,8 @@ a:hover {
 
 .module-navigation {
   width: 100%;
-  margin-top: 1em;
+  /* margin-top: 1em; */
+  /* margin-top: 10px; */
 }
 
 .module-navigation img {
@@ -435,7 +431,7 @@ a:hover {
 
 .module-header {
   display: block;
-  margin: 0 24%;
+  margin: 10px 20%;
 }
 
 .body {
@@ -447,28 +443,30 @@ button .icon {
 }
 
 .module-body {
-  padding-left: 300px;
-  margin-top: 40px;
+  padding-left: 10%;
+  /* margin-top: 40px; */
+  /* .body already has padding */
+  /* margin-top: 20px; */
   display: flex;
 
+}
+
+.module-drawing img {
+  max-width: 100%;
 }
 
 .module-drawing {
   opacity: .9;
   margin-top: 0;
   transition: all .2s ease-in-out;
-  width: 460px;
-  height: 480px;
+  width: 320px;
+  height: 360px;
 }
 
 .module-drawing:hover {
   cursor: pointer;
   opacity: 1;
   margin-top: -3px;
-}
-
-.filler-para {
-  margin-bottom: 40px;
 }
 
 .filler-line {
@@ -490,8 +488,6 @@ button .icon {
   display: flex;
   height: 160px;
   margin-bottom: 20px;
-  /* Since children have their own margins */
-  margin-left: 10px;
 }
 
 .module-image-gallery-image {
@@ -501,14 +497,51 @@ button .icon {
 
 }
 
+.module-image-gallery-image:last-child {
+
+  margin-right: 0;
+}
+
 .side-by-paras {
   display: flex;
-  margin-left: 10px;
+  /* margin-left: 10px; */
 
 }
 
 .side-by-paras p {
   flex: 1;
+}
+
+.side-by-paras p:first-child {
   margin-right: 20px;
 
+}
+@media only screen and (min-width:1600px) {
+  .module-navigation {
+    margin-top: 10px;
+  }
+
+  .module-header {
+    margin-top: 40px;
+  }
+
+  .module-drawing {
+    width: 460px;
+    height: 480px;
+  }
+
+  .module-slugline {
+    font-size: 1.2em;
+  }
+
+  .module-body {
+
+    /* padding-left: 20%; */
+    padding-left: 15%;
+  }
+
+  .module-slugline {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
 }

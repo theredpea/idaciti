@@ -28,11 +28,9 @@
          <rect style="opacity:1;vector-effect:none;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" 
             id="rect891" 
             width="60" 
-            height="60"
-            x="30"
-            y="0"  >
-
-            <!-- transform="rotate(73.792872)" -->
+            height="60" 
+            x="30" 
+            y="0">
             <animateTransform attributeType="xml" 
                attributeName="transform" 
                type="rotate" 
@@ -44,18 +42,6 @@
          </rect>
       </clipPath>
    </defs>
-   <!-- <g transform="translate(18 ,18)"> -->
-   <!-- </g> -->
-   <!-- <rect style="opacity:1;vector-effect:none;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:0.13222653px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="rect2001" height="31.65934" width="29.174982" x="-86.094742" y="273.09891" ry="0" transform="rotate(-16.581403)">
-
-
-            <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 15 15" to="360 15 15" dur="1s" repeatCount="indefinite"/>
-         </rect> -->
-   <!-- 
-            <animateTransform attributeType="xml" attributeName="transform" type="translate" values="0;1;" keyTimes="0;1" calcMode="spline" dur="4s" repeatCount="indefinite" /> -->
-   <!-- additive="sum"  -->
-   <!-- 
-            <animate attributeName="width" dur="4s" repeatCount="indefinite" values="30;0;30" keyTimes="0;0.5;1" /> -->
    <sodipodi:namedview id="base" 
       pagecolor="#ffffff" 
       bordercolor="#666666" 

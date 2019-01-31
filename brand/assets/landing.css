@@ -493,7 +493,8 @@ button .icon {
 .module-image-gallery-image {
   flex: 1;
   margin-right: 20px;
-  background-color: white;
+  /* background-color: white; */
+  background-color: #686868;
 
 }
 
@@ -515,6 +516,26 @@ button .icon {
 .side-by-paras p:first-child {
   margin-right: 20px;
 
+}
+
+.loading {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.loading svg {
+
+  /* height: 100%; */
+  width: 100px;
+  height: 100px;
+  /* My dots exceed the outer boundaries of SVG */
+  overflow: visible;
+  left: 50%;
+  top: 50%;
+  position: absolute;
 }
 @media only screen and (min-width:1600px) {
   .module-navigation {

@@ -480,7 +480,7 @@ button .icon {
 
 .module-content-block {
 
-  width: 700px;
+  width: 600px;
   height: 500px;
 }
 
@@ -564,5 +564,10 @@ button .icon {
   .module-slugline {
     font-size: 2em;
     margin-bottom: 20px;
+  }
+
+  .module-content-block {
+
+    width: 700px;
   }
 }

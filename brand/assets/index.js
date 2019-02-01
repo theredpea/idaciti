@@ -4,12 +4,187 @@
 window.onload = function () {
     // Following point-along-path interpolation example
     // https://bl.ocks.org/mbostock/1705868
-    var points = [
-        [68, 28],
-        [88, 8],
-        [108, 28],
-        [88, 48],
+
+    var perfect_circle_points = (function () {
+
+        var points = [
+            [-20, 0],
+            [-14, -14],
+            [0, -20],
+            [14, -14],
+            [20, 0],
+            [14, 14],
+            [0, 20],
+            [-14, 14]
+        ].map(_ => {
+
+            // _[0] *= 1.8;
+            // _[1] *= 1.8;
+            // Center (?) 
+            _[0] += 85;
+            _[1] += 28;
+            return _;
+        });
+
+        points.push(points.shift());
+        return points;
+
+    })();
+
+
+    var story_points = [
+        [181.3065, -154.06628],
+        [181.29469, -149.9558],
+        [182.36955, -148.97542],
+        [187.38956, -148.93997],
+        [188.44081, -150.12115],
+        [188.36993, -154.04266],
+        [187.42499, -155.10571],
+        [182.44043, -155.11752]
+    ].map(_ => {
+
+        _[0] -= 185;
+        _[1] += 150;
+
+        _[0] *= 5;
+        _[1] *= 5;
+
+        var s = _[0];
+        _[0] = _[1];
+        _[1] = s;
+
+
+        _[0] += 95;
+        _[1] += 28;
+        return _;
+    });
+
+    var link_points = [
+        [-7.0954428, -18.655664],
+        [4.9903383, -18.714716],
+        [9.8922281, -13.340417],
+        [10.069458, 11.759604],
+        [4.1635399, 17.015875],
+        [-6.9773397, 16.661489],
+        [-12.292588, 11.936759],
+        [-12.351639, -12.986032],
+    ].map(_ => {
+
+        _[0] *= 1.1;
+        _[1] *= 1.1;
+
+        var s = _[0];
+        _[0] = _[1];
+        _[1] = s;
+
+
+        _[0] += 85;
+        _[1] += 28;
+
+        return _;
+    });
+
+
+
+    var marker_points = [
+        [-6.8949904, -12.107561],
+        [6.0594163, -11.231169],
+        [19.981653, -2.1150968],
+        [20.025248, 0.80155379],
+        [6.2348785, 10.668223],
+        [-6.2423487, 11.917456],
+        [-13.428484, 5.3886557],
+        [-13.487535, -5.5693021],
+    ].map(_ => {
+
+        _[0] *= 1.3;
+        _[1] *= 1.3;
+
+        var s = _[0];
+        _[0] = _[1];
+        _[1] = s;
+
+
+        _[0] += 87;
+        _[1] += 23;
+
+        return _;
+    });
+
+
+    var light_points = [
+        [8.3393726, -15.44843],
+        [18.019728, -7.6230302],
+        [17.77668, 6.8384323],
+        [8.866745, 14.69957],
+        [-0.24640751, 8.5968847],
+        [-10.785931, 6.7725177],
+        [-10.622154, -7.707551],
+        [-0.19087647, -9.1774406]
+    ].map(_ => {
+
+        _[0] *= 1.3;
+        _[1] *= 1.3;
+
+        var s = _[0];
+        _[0] = _[1];
+        _[1] = s;
+
+
+        _[0] += 87;
+        _[1] += 23;
+
+        return _;
+    });
+
+
+    var cycle_index = 0;
+
+    // var slides_cycle = [
+    //     {points:}
+    // ]
+    var slides_cycle = [
+        {
+            points: perfect_circle_points,
+            header: '',
+            subheader: '',
+            description: '',
+            icon: 'baseline-touch_app-24px.svg'
+        },
+        {
+            points: story_points,
+            header: '',
+            subheader: '',
+            description: '',
+            icon: 'baseline-book-24px.svg'
+        },
+        {
+            points: link_points,
+            header: '',
+            subheader: '',
+            description: '',
+            icon: 'baseline-link-24px.svg'
+        },
+        {
+            points: marker_points,
+            header: '',
+            subheader: '',
+            description: '',
+            icon: 'baseline-where_to_vote-24px.svg'
+        },
+        {
+            points: light_points,
+            //TODO: the light is upside down; adjust starting points so the peak speed is at the long end of the light, not the crooked end
+            header: '',
+            subheader: '',
+            description: '',
+            icon: 'baseline-highlight-24px.svg'
+        },
     ];
+
+    var points = slides_cycle[cycle_index].points;
+    // var points = story_points;
+
 
     var svg = d3.select("svg");
 
@@ -23,7 +198,33 @@ window.onload = function () {
         .attr("d", d3.line().curve(d3.curveCatmullRomClosed.alpha(0.5)));
 
 
-    [1, 2, 3, 4].forEach(function (i) {
+    var icon_img = svg.append("image")
+        .attr('xlink:href', slides_cycle[cycle_index].icon)
+        .attr('width', '30px')
+        .attr('height', '30px')
+        .attr('x', 69)
+        .attr('y', 14)
+
+    setInterval(function () {
+
+        var current_index = (++cycle_index) % slides_cycle.length;
+        points = slides_cycle[current_index].points;
+        // (points === story_points) ? perfect_circle_points : story_points;
+
+        path
+            // Same number of points no worries about transition
+            .data([points])
+            .transition()
+            // .delay(delay || 0)
+            .duration(2000)
+            .attr("d", d3.line().curve(d3.curveCatmullRomClosed.alpha(0.5)));
+
+        icon_img.attr('href', slides_cycle[current_index].icon);
+
+    }, 6000);
+
+    points.forEach(function (point, i) {
+
 
         var dotty_circle = svg.append("circle")
             .classed('dotty', true)

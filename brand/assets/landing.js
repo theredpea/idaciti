@@ -4,25 +4,34 @@
 window.onload = function () {
     // Following point-along-path interpolation example
     // https://bl.ocks.org/mbostock/1705868
-    var points = [
-        [-20, 0],
-        [-14, -14],
-        [0, -20],
-        [14, -14],
-        [20, 0],
-        [14, 14],
-        [0, 20],
-        [-14, 14]
-    ].map(_ => {
 
-        _[0] *= 1.8;
-        _[1] *= 1.8;
-        // Center (?) 
-        _[0] += 27;
-        _[1] += 28;
-        return _;
-    });
+    var perfect_circle = (function () {
+        var points = [
+            [-20, 0],
+            [-14, -14],
+            [0, -20],
+            [14, -14],
+            [20, 0],
+            [14, 14],
+            [0, 20],
+            [-14, 14]
+        ].map(_ => {
 
+            _[0] *= 1.8;
+            _[1] *= 1.8;
+            // Center (?) 
+            _[0] += 27;
+            _[1] += 28;
+            return _;
+        });
+
+        points.push(points.shift());
+        return points;
+
+    })();
+
+    var points = perfect_circle;
+    
     var svg = d3.select("svg");
 
     var path = svg.append("path")

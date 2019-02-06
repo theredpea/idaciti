@@ -64,11 +64,60 @@ input {
   font-family: 'Aller-Regular';
 }
 
+.intro-paragraph-container,
+.meet-paragraph-container {
+
+  overflow: hidden;
+  position: relative;
+  /* 
+  */
+}
+.intro-paragraph-container {
+  height: 100px;
+}
+
+.meet-paragraph-container {
+  height: 60px;
+}
+
+.intro-paragraph,
+.meet-paragraph {
+  position: absolute;
+  /* transition: all 1s ease-in-out; */
+  transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  top: 0;
+}
+
+.intro-paragraph.off-screen-top,
+.meet-paragraph.off-screen-top {
+  /* position:relative; */
+  top: -100px;
+}
+
+.intro-paragraph.active,
+.meet-paragraph.active {
+  /* position:relative; */
+  top: 0;
+}
+
+.intro-paragraph.off-screen-bottom,
+.meet-paragraph.off-screen-bottom {
+  top: 100px;
+  /* bottom: -100px; */
+}
+
+.meet-paragraph-container {
+  width: 200%;
+}
+
 .meet-paragraph {
   /* font-size:  4em; */
   font-size: 48px;
+  /* The login area to the right, must accommodate*/
+  width: 100%;
 }
 
+/* for the case of idaciti logos  shown inline in text , for example "Meet idaciti" */
 .meet-paragraph > * {
   vertical-align: top;
 }
@@ -83,7 +132,11 @@ input {
 
 .intro-paragraph {
   font-size: 1.5em;
-
+  color: #3b3b3b;
+  /* background-color: #8b8b8b8c; */
+  /* padding: 5px 10px; */
+  font-weight: bolder;
+  line-height: 32px;
 }
 
 .idaciti-background {
@@ -274,7 +327,7 @@ svg {
 }
 
 .header {
-    /* Let the list do this */
+  /* Let the list do this */
   /* padding-top: 20px;
   padding-bottom: 20px; */
   box-sizing: border-box;
@@ -383,6 +436,16 @@ svg {
     width: 450px;
   }
 
+}
+@media only screen and (max-height:800px) {
+  .login-container {
+    height: 450px;
+    margin-top: 50px;
+  }
+
+  .body {
+    padding-top: 20px;
+  }
 }
 @media only screen and (min-width:1600px) {
   .drawing-container {

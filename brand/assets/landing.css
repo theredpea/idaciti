@@ -80,11 +80,15 @@ input {
 }
 
 .idaciti-background {
-  background-color: #bfd730;
+  /* background-color: #bfd730; */
+  /* background-color: #bad52f; */
+  background-color: #bbd430;
 }
 
 .idaciti-foreground {
-  color: #bfd730;
+  /* color: #bfd730; */
+  /* color: #bad52f; */
+  color: #bbd430;
 }
 
 .primary-color {

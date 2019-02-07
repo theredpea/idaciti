@@ -184,6 +184,7 @@ input {
   right: 0;
   top: 0;
   bottom: 0;
+  transition: all .2s ease-in-out;
 }
 
 .row-background {
@@ -202,6 +203,58 @@ input {
 
 .benefit-container:nth-child(odd) .row-background {
   background-position: calc(100% + 200px) 40px;
+}
+
+.loading-curtain-drop {
+  z-index: 2;
+  transition: all .4s ease-in-out;
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 0;
+  /* overflow: hidden; */
+  /* Not sure if we want it to go all the way dark, then the ike loading hard to read */
+  background: #696969;
+}
+
+.loading-ike-container {
+
+  position: fixed;
+  top: 50%;
+  /* bottom: 0; */
+  left: 50%;
+  /* right: 0; */
+  width: 200px;
+  height: 200px;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+
+}
+
+.loading-ike-container svg {
+
+  width: 100px;
+  height: 100px;
+  overflow: visible;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 200%);
+  /* transition: all .2s ease-in-out; */
+  transition: all .2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  /* Give time for the curtain to drop*/
+  transition-delay: 0s;
+}
+
+.loading-curtain-drop.loading {
+  height: calc(100% - 20px);
+}
+
+.loading-curtain-drop.loading .loading-ike-container svg {
+
+  transform: translate(-50%,0);
+  transition-delay: .2s;
 }
 
 .highlight-notification-strip {
@@ -608,8 +661,26 @@ svg {
   border-radius: 60px;
   display: block;
   position: relative;
-  margin: auto;
   top: 20px;
+  margin: 0 -20px;
+  transition: all .2s ease-in-out;
+  opacity: .8;
+  background-color: #494949;
+
+}
+
+.benefit-container:nth-child(odd) .benefit-icon-container {
+
+  margin: 0 20px;
+}
+
+.benefit-container:hover .benefit-icon-container {
+  margin: 0;
+  opacity: 1;
+}
+
+.benefit-container:hover .row-background {
+  opacity: .5;
 }
 
 .idaciti-module-icon {

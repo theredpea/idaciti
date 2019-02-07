@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.24748737"
-     inkscape:cx="-317.40678"
-     inkscape:cy="690.76237"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="292.04059"
+     inkscape:cy="822.34379"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -915,5 +915,11 @@
          x="46.055229"
          y="27.729"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Aller;-inkscape-font-specification:Aller;stroke-width:0.26458332">Segment Reporting</tspan></text>
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#797979;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.68656266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m 53.166993,-34.225033 c -3.39389,1e-4 -6.14515,2.75136 -6.14525,6.14525 10e-4,0.05 0.003,0.1 0.005,0.14995 h -1.22637 c 7.9e-4,-0.0378 0.005,-0.0745 0.005,-0.11246 9e-5,-3.39655 -2.75408,-6.15061 -6.15061,-6.15061 -3.39654,0 -6.1506,2.75406 -6.1506,6.15061 0,0.038 0.005,0.0747 0.005,0.11246 h -1.11807 -183.176223 v 0.6828 h 183.176223 1.17014 c 0.39078,3.02078 2.96651,5.354 6.09304,5.354 3.12652,0 5.70361,-2.33322 6.09438,-5.354 h 1.33615 c 0.41538,3.04142 3.01133,5.30988 6.08099,5.31384 3.07016,-0.003 5.66688,-2.27191 6.08232,-5.31384 h 1.49146 c 0.39077,3.02078 2.9665,5.354 6.09304,5.354 3.12653,0 5.70361,-2.33322 6.09437,-5.354 h 2.52639 c 0.39077,3.02078 2.9665,5.354 6.09303,5.354 3.12652,0 5.70361,-2.33322 6.09437,-5.354 h 1.336155 c 0.41538,3.04142 3.01133,5.30989 6.08099,5.31384 3.07016,-0.003 5.666862,-2.27192 6.082312,-5.31384 h 1.49148 c 0.39076,3.02078 2.9665,5.354 6.09304,5.354 3.12652,0 5.70361,-2.33322 6.09437,-5.354 h 103.49323 102.89903 v -0.6828 H 218.31235 114.86998 c 7.9e-4,-0.0378 0.007,-0.0745 0.007,-0.11246 4e-5,-3.39655 -2.75406,-6.15061 -6.1506,-6.15061 -3.39654,0 -6.1506,2.75406 -6.1506,6.15061 0,0.038 0.005,0.0747 0.005,0.11246 h -1.38436 c 0.003,-0.0499 0.006,-0.0999 0.008,-0.14995 -1.1e-4,-3.39388 -2.751362,-6.14514 -6.145242,-6.14525 h -0.001 c -3.39389,1e-4 -6.14515,2.75136 -6.14525,6.14525 0.002,0.05 0.004,0.1 0.007,0.14995 h -1.227775 c 7.9e-4,-0.0378 0.007,-0.0745 0.007,-0.11246 9e-5,-3.39655 -2.75407,-6.15061 -6.1506,-6.15061 -3.39655,0 -6.15061,2.75406 -6.15061,6.15061 0,0.038 0.005,0.0747 0.005,0.11246 h -2.42463 c 8e-4,-0.0378 0.005,-0.0745 0.005,-0.11246 4e-5,-3.39655 -2.75407,-6.15061 -6.15061,-6.15061 -3.39654,0 -6.1506,2.75406 -6.1506,6.15061 0,0.038 0.005,0.0747 0.005,0.11246 h -1.38437 c 0.003,-0.0499 0.006,-0.0999 0.008,-0.14995 1e-5,-3.39386 -2.75121,-6.14511 -6.14506,-6.14525 z"
+       id="path1063-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccssccccccscccccsccscccccscccccccsscccccccccsscccssccccc" />
   </g>
 </svg>

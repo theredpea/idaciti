@@ -473,7 +473,8 @@ svg {
   height: 100%;
   overflow: hidden;
   z-index: -2;
-  position: absolute;
+  /* position: absolute; */
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -542,6 +543,8 @@ svg {
   border-radius: 60px;
   display: block;
   position: relative;
+  margin: auto;
+  top: 20px;
 }
 
 .idaciti-module-icon {
@@ -591,6 +594,36 @@ svg {
   background-image: url('module_icon__ixbrl_viewer__light.svg');
 }
 
+.idaciti-module--disclosure_research.dark {
+  background-image: url('module_icon__disclosure_research__dark.svg');
+}
+
+.idaciti-module--disclosure_research.light {
+  background-image: url('module_icon__disclosure_research__light.svg');
+}
+
+.idaciti-module--user_manager.dark {
+  background-image: url('module_icon__user_manager__dark.svg');
+}
+
+.idaciti-module--user_manager.light {
+  background-image: url('module_icon__user_manager__light.svg');
+}
+
+.idaciti-module--company_explorer.dark {
+  background-image: url('module_icon__company_explorer__dark.svg');
+}
+
+.idaciti-module--company_explorer.light {
+  background-image: url('module_icon__company_explorer__light.svg');
+}
+
+.benefit-container:nth-child(even) {
+  background-color: #999999;
+
+  background: -webkit-linear-gradient(left, rgba(124, 124, 124, 0) 0%,rgb(186, 186, 186) 50%,rgba(124, 124, 124, 0) 100%);
+}
+
 .idaciti-accent-background-1 {
   background-color: #e101df;
 }
@@ -605,4 +638,12 @@ svg {
 
 .idaciti-accent-background-4 {
   background-color: #e9c403;
+}
+
+.benefit-header {
+  margin-bottom: .5em;
+}
+
+.row:first-child {
+  margin-bottom: 1em;
 }

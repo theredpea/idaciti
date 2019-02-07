@@ -472,4 +472,17 @@ window.onload = function () {
             })
     }
 
+    var scroll_callback = function (event) {
+        var scroll = this.scrollY;
+        console.log(scroll)
+        d3.selectAll('.header, .highlight-notification-strip').classed('fixed', this.scrollY !== 0)
+        // d3.select('.header').toggleClass('fixed', this.scrollY === 0)
+        // if (this.scrollY === 0) {
+        // } else {
+
+        // }
+    };
+
+    window.addEventListener("scroll", scroll_callback);
+    scroll_callback();
 }

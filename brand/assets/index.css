@@ -177,9 +177,46 @@ input {
   background-color: #3b3b3b;
 }
 
+.row-background {
+  /* height:100%; */
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.row-background {
+  background: url("./abacus_pair_background.svg");
+  background-repeat: no-repeat;
+  background-size: auto 120px;
+  background-position: -200px 40px;
+  /* TODO: animate */
+  opacity: .25;
+
+}
+
+.benefit-container:nth-child(odd) {
+  background-color: grey;
+}
+
+.benefit-container:nth-child(odd) .row-background {
+  background-position: calc(100% + 200px) 40px;
+}
+
 .highlight-notification-strip {
   height: 20px;
   display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 0;
+  transition: all .2s ease-in-out;
+}
+
+.highlight-notification-strip.fixed {
+  height: 0;
 }
 
 body,
@@ -196,6 +233,7 @@ html {
 
 .body .row {
   flex: 1;
+  position: relative;
 }
 
 .header {
@@ -342,13 +380,32 @@ svg {
   /* padding-top: 20px;
   padding-bottom: 20px; */
   box-sizing: border-box;
-  background-color: transparent;
-  transition: background-color .2s ease-in-out;
+  /* background-color: transparent; */
+  /* Same background color as back*/
+  background-color: grey;
+
+  /* transition: background-color .2s ease-in-out; */
+  transition: all .2s ease-in-out;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 20px;
+  z-index: 1;
 }
 
+.header.fixed {
+  top: 0;
+}
+
+.header.fixed,
 .header:hover {
 
-  background-color: #4949495a;
+  /* background-color: #4949495a; */
+  background-color: #6e6e6e;
+}
+
+.header.fixed .logo {
+  width: 140px;
 }
 
 .header ul {
@@ -387,6 +444,14 @@ svg {
 
   width: 160px;
   margin-top: 15px;
+  transition: all .2s ease-in-out;
+}
+
+/* .header.fixed + .body {
+  margin-top: 73px;
+} */
+.body {
+  margin-top: 75px;
 }
 
 .social-icon {
@@ -648,4 +713,8 @@ svg {
 
 .row:first-child {
   margin-bottom: 1em;
+}
+
+.footer {
+  height: 300px;
 }

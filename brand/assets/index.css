@@ -621,7 +621,7 @@ svg {
 .benefit-container:nth-child(even) {
   background-color: #999999;
 
-  background: -webkit-linear-gradient(left, rgba(124, 124, 124, 0) 0%,rgb(186, 186, 186) 50%,rgba(124, 124, 124, 0) 100%);
+  /* background: -webkit-linear-gradient(left, rgba(124, 124, 124, 0) 0%,rgb(186, 186, 186) 50%,rgba(124, 124, 124, 0) 100%); */
 }
 
 .idaciti-accent-background-1 {

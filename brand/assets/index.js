@@ -515,6 +515,8 @@ window.onload = function () {
     d3.select('.loading-curtain-drop')
         .on('click', function () {
 
+            loading_ike.exit_timeout && clearTimeout(loading_ike.exit_timeout);
+            
             d3.selectAll('body, .loading-ike-container')
                 .classed('loading', false);
 

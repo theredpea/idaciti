@@ -2,17 +2,20 @@
   font-family: 'Aller-Regular';
   src: url('./fonts/Aller_Rg.ttf') format('truetype');
 }
-@font-face {
+/* The AllerDisplay font has inconsistent capitalization among the letters  */
+/* @font-face {
   font-family: 'Aller-Display';
   src: url('./fonts/AllerDisplay.ttf') format('truetype');
-}
+} */
 @font-face {
   font-family: 'Aller-Light';
   src: url('./fonts/Aller_Lt.ttf') format('truetype');
 }
 
 .font-display {
-  font-family: 'Aller-Display';
+  /* font-family: 'Aller-Display'; */
+  font-family: 'Aller';
+  font-weight: bolder;
 }
 
 .font-light {
@@ -72,6 +75,7 @@ input {
   /* 
   */
 }
+
 .intro-paragraph-container {
   height: 100px;
 }
@@ -185,8 +189,13 @@ html {
 }
 
 .body,
+.body .row,
 .header {
   display: flex;
+}
+
+.body .row {
+  flex: 1;
 }
 
 .header {
@@ -195,6 +204,8 @@ html {
 
 .body {
   padding-top: 50px;
+  display: block;
+  flex-direction: column;
 }
 
 .drawing-container {
@@ -489,4 +500,109 @@ svg {
   top: 340px;
   /* background-position-x: -20%; */
   left: -40%;
+}
+
+.benefit-container:nth-child(odd) {
+  /* Should we do this *(?)  */
+  text-align: right;
+  text-align: justify;
+}
+
+.benefit-container:nth-child(odd) .benefit-image {
+  order: 2;
+}
+
+.benefit-container {
+  font-size: 1.5em;
+  padding: 20px 15%;
+}
+
+.benefit-container .benefit-header {
+  font-weight: bolder;
+}
+
+.benefit-container .benefit-description {
+  padding: 10px;
+}
+
+.benefit-container .benefit-detail p {
+  margin-bottom: 1em;
+}
+
+.benefit-image {
+  display: block;
+  min-width: 180px;
+  height: 180px;
+}
+
+.benefit-icon-container {
+  width: 120px;
+  height: 120px;
+  background-color: #434343;
+  border-radius: 60px;
+  display: block;
+  position: relative;
+}
+
+.idaciti-module-icon {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px;
+  /* margin: auto; 
+  Just use absolute positioning*/
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.idaciti-module--ixbrl_viewer.dark {
+  background-image: url('module_icon__ixbrl_viewer__dark.svg');
+}
+
+.idaciti-module--ixbrl_viewer.light {
+  background-image: url('module_icon__ixbrl_viewer__light.svg');
+}
+
+.idaciti-module--financial_analysis.dark {
+  background-image: url('module_icon__financial_analysis__dark.svg');
+}
+
+.idaciti-module--financial_analysis.light {
+  background-image: url('module_icon__financial_analysis__light.svg');
+}
+
+.idaciti-module--segment_reporting.dark {
+  background-image: url('module_icon__segment_reporting__dark.svg');
+}
+
+.idaciti-module--segment_reporting.light {
+  background-image: url('module_icon__segment_reporting__light.svg');
+}
+
+.idaciti-module--ixbrl_viewer.dark {
+  background-image: url('module_icon__ixbrl_viewer__dark.svg');
+}
+
+.idaciti-module--ixbrl_viewer.light {
+  background-image: url('module_icon__ixbrl_viewer__light.svg');
+}
+
+.idaciti-accent-background-1 {
+  background-color: #e101df;
+}
+
+.idaciti-accent-background-2 {
+  background-color: #01e1a0;
+}
+
+.idaciti-accent-background-3 {
+  background-color: #00c2b7;
+}
+
+.idaciti-accent-background-4 {
+  background-color: #e9c403;
 }

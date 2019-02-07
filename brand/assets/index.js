@@ -227,7 +227,8 @@ window.onload = function () {
     var active_icon_path_class = 'active-icon-path';
     d3.selectAll(slides_cycle
         // Dont do this to the first
-        .filter((_, i) => i > 0)
+        // Actually hide all of them; 
+        // .filter((_, i) => i > 0)
         .map(function (_) { return '#' + _.path_id }).join(', '))
         .attr('transform', 'translate(0, ' + icon_path_drop_to + ')');
 
@@ -258,41 +259,44 @@ window.onload = function () {
         var current_index = (++cycle_index) % slides_cycle.length;
         var current_slide = slides_cycle[current_index];
 
-        //Clean up off-screen bottoms from last time
-        d3
-            .selectAll('.off-screen-bottom')
-            .remove();
+        var cycle_text = function () {
 
-        //Animate what is active, down to the bottom
-        var new_meet_paragraph = d3
-            .select('.meet-paragraph-container')
-            .append('p')
-            //Gotta give it the right class
-            .classed('font-display meet-paragraph', true)
-            .classed('off-screen-top', true)
-            // https://github.com/d3/d3-selection/blob/master/README.md#selection_html
-            .html(current_slide.headline_html);
+            //Clean up off-screen bottoms from last time
+            d3
+                .selectAll('.off-screen-bottom')
+                .remove();
+
+            //Animate what is active, down to the bottom
+            var new_meet_paragraph = d3
+                .select('.meet-paragraph-container')
+                .append('p')
+                //Gotta give it the right class
+                .classed('font-display meet-paragraph', true)
+                .classed('off-screen-top', true)
+                // https://github.com/d3/d3-selection/blob/master/README.md#selection_html
+                .html(current_slide.headline_html);
 
 
-        var new_intro_paragraph = d3
-            .select('.intro-paragraph-container')
-            .append('p')
-            // intro-paragraph active off-screen-bottom
-            .classed('font-light secondary-enhanced-color intro-paragraph', true)
-            .classed('off-screen-top', true)
-            .html(current_slide.sub_headline_html);
+            var new_intro_paragraph = d3
+                .select('.intro-paragraph-container')
+                .append('p')
+                // intro-paragraph active off-screen-bottom
+                .classed('font-light secondary-enhanced-color intro-paragraph', true)
+                .classed('off-screen-top', true)
+                .html(current_slide.sub_headline_html);
 
-        d3
-            .selectAll('.meet-paragraph.active, .intro-paragraph.active')
-            .classed('off-screen-bottom', true);
+            d3
+                .selectAll('.meet-paragraph.active, .intro-paragraph.active')
+                .classed('off-screen-bottom', true);
 
-        // Only after animating the off-screen-bottom away
-        setTimeout(function () {
+            // Only after animating the off-screen-bottom away
+            setTimeout(function () {
 
-            new_meet_paragraph.classed('active', true);
-            new_intro_paragraph.classed('active', true);
-        }, 1000);
+                new_meet_paragraph.classed('active', true);
+                new_intro_paragraph.classed('active', true);
+            }, 1000);
 
+        }
 
         points = current_slide.points;
         // (points === story_points) ? perfect_circle_points : story_points;
@@ -308,28 +312,31 @@ window.onload = function () {
         // https://stackoverflow.com/a/15798636/1175496
         // > The transition is attached to the svg element and chained from there.
 
-        var icon_disappear = svg
-            .transition()
-            .ease(d3.easeBounce)
-            .duration(750);
+        var cycle_icon = function () {
 
-        icon_disappear
-            .delay(500)
-            .selectAll('.' + active_icon_path_class)
-            .attr('transform', 'translate(0, ' + -icon_path_drop_to + ')');
+            var icon_disappear = svg
+                .transition()
+                .ease(d3.easeBounce)
+                .duration(750);
 
-        d3.select('.' + active_icon_path_class)
-            .classed(active_icon_path_class, false);
+            icon_disappear
+                .delay(500)
+                .selectAll('.' + active_icon_path_class)
+                .attr('transform', 'translate(0, ' + -icon_path_drop_to + ')');
 
-        d3.select('#' + current_slide.path_id)
-            .classed(active_icon_path_class, true)
-            .attr('transform', 'translate(0, ' + icon_path_drop_to + ')');
+            d3.select('.' + active_icon_path_class)
+                .classed(active_icon_path_class, false);
 
-        icon_disappear.transition()
-            // .ease(d3.easeElastic)
-            .duration(750)
-            .selectAll('#' + current_slide.path_id)
-            .attr('transform', 'translate(0, 0)');
+            d3.select('#' + current_slide.path_id)
+                .classed(active_icon_path_class, true)
+                .attr('transform', 'translate(0, ' + icon_path_drop_to + ')');
+
+            icon_disappear.transition()
+                // .ease(d3.easeElastic)
+                .duration(750)
+                .selectAll('#' + current_slide.path_id)
+                .attr('transform', 'translate(0, 0)');
+        }
 
 
     }, 6000);

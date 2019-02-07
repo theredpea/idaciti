@@ -3,98 +3,6 @@
 // document.onload = function () {
 // https://stackoverflow.com/a/807895/1175496
 
-var animate_loading_ike = function () {
-    // Following point-along-path interpolation example
-    // https://bl.ocks.org/mbostock/1705868
-
-    var perfect_circle = (function () {
-        var points = [
-            [-20, 0],
-            [-14, -14],
-            [0, -20],
-            [14, -14],
-            [20, 0],
-            [14, 14],
-            [0, 20],
-            [-14, 14]
-        ].map(_ => {
-
-            _[0] *= 1.8;
-            _[1] *= 1.8;
-            // Center (?) 
-            _[0] += 27;
-            _[1] += 28;
-            return _;
-        });
-
-        points.push(points.shift());
-        return points;
-
-    })();
-
-    var points = perfect_circle;
-
-    var svg = d3.select("svg#svg1415");
-
-    var path = svg.append("path")
-        .attr('fill', 'transparent')
-        // 2px solid #3b3b3b')
-        .classed('catmull-rom-curve', true)
-        .data([points])
-        .attr("d", d3.line().curve(d3.curveCatmullRomClosed.alpha(0.5)));
-
-
-    points.forEach(function (point, i) {
-
-        var dotty_circle = svg.append("circle")
-            .classed('dotty', true)
-            // The enhanced-secnodar-color
-            .attr('fill', '#3b3b3b')
-            .attr('data-dotty-index', i)
-            .attr("r", 4)
-            .attr('transform', 'translate(' + point[0] + ',' + point[1] + ')')
-
-        // dotty_circle.append('text')
-        //     .text(i)
-        // .attr("transform", "translate(" + points[1] + ")");
-
-        // No delay
-        transition(dotty_circle, 0, i / points.length);
-    });
-
-
-    function transition(circle, delay, frac) {
-        circle.transition()//(1))
-            .delay(delay || 0)
-            .duration(3600)
-            // Maybe easing doesnt happen
-            // .ease(d3.easeQuadOut)
-            .ease(d3.easeLinear)
-            .attrTween("transform", translateAlong(path.node(), frac))
-            .on("end", function () {
-                return transition(circle, delay, frac)
-            });
-    }
-
-    // Returns an attrTween for translating along the specified path element.
-    function translateAlong(path, frac) {
-        var l = path.getTotalLength(); // * (frac || 1);
-        return function (d, i, a) {
-            return function (t) {
-                // var p = path.getPointAtLength(Math.abs(t - frac || 0) * l);
-                var progress = t - frac || 0;
-                // (t - frac < 0 ) ? 
-                progress = progress < 0 ? (progress + 1) : progress;
-                // if (progress<0)
-                var p = path.getPointAtLength(progress * l);
-                return "translate(" + p.x + "," + p.y + ")";
-            };
-        };
-    }
-
-
-}
-
 window.onload = function () {
     // Following point-along-path interpolation example
     // https://bl.ocks.org/mbostock/1705868
@@ -584,17 +492,269 @@ window.onload = function () {
     // document.getElementsByClassName('sign-in')[0].
     d3.select('.sign-in')
         .on('click', function () {
-            d3.select('.loading-curtain-drop')
+
+            //Undoing the ike "chase scene"
+            d3.select('.loading-ike-container g')
+                .attr('transform', 'translate(0, 0)')
+
+            d3.selectAll('body, .loading-ike-container')//loading-curtain-drop')
                 .classed('loading', true);
             // alert('hi');
+            loading_ike.exit_timeout && clearTimeout(loading_ike.exit_timeout);
+            loading_ike.exit_timeout = setTimeout(function () {
+
+                d3.select('.loading-ike-container')
+                    .classed('loading', false);
+
+                module_menu.animate_entrance();
+
+            }, 3000);
+            // loading_ike.animate_exit_chase();
         })
+
     d3.select('.loading-curtain-drop')
         .on('click', function () {
-            d3.select('.loading-curtain-drop')
+
+            d3.selectAll('body, .loading-ike-container')
                 .classed('loading', false);
+
+            module_menu.exit();
 
         })
 
-    animate_loading_ike();
+    loading_ike.animate_entrance();
 }
 
+loading_ike = {
+    animate_entrance: function () {
+        loading_ike.exit_chase_timeout && clearTimeout(loading_ike.exit_chase_timeout);
+
+        // Following point-along-path interpolation example
+        // https://bl.ocks.org/mbostock/1705868
+
+        var perfect_circle = (function () {
+            var points = [
+                [-20, 0],
+                [-14, -14],
+                [0, -20],
+                [14, -14],
+                [20, 0],
+                [14, 14],
+                [0, 20],
+                [-14, 14]
+            ].map(_ => {
+
+                _[0] *= 1.8;
+                _[1] *= 1.8;
+                // Center (?) 
+                _[0] += 27;
+                _[1] += 28;
+                return _;
+            });
+
+            points.push(points.shift());
+            return points;
+
+        })();
+
+        var points = perfect_circle;
+
+        var svg = d3.select("svg#svg1415");
+
+        var path = svg.append("path")
+            .attr('fill', 'transparent')
+            // 2px solid #3b3b3b')
+            .classed('catmull-rom-curve', true)
+            .data([points])
+            .attr("d", d3.line().curve(d3.curveCatmullRomClosed.alpha(0.5)));
+
+
+        points.forEach(function (point, i) {
+
+            var dotty_circle = svg
+                .append("circle")
+                .classed('dotty', true)
+                .attr('fill', '#3b3b3b')
+                .attr('data-dotty-index', i)
+                .attr("r", 4)
+                .attr('transform', 'translate(' + point[0] + ',' + point[1] + ')')
+
+
+            // No delay
+            transition(dotty_circle, 0, i / points.length);
+        });
+
+
+        function transition(circle, delay, frac) {
+            circle.transition()//(1))
+                .delay(delay || 0)
+                .duration(3600)
+                // Maybe easing doesnt happen
+                // .ease(d3.easeQuadOut)
+                .ease(d3.easeLinear)
+                .attrTween("transform", translateAlong(path.node(), frac))
+                .on("end", function () {
+                    return transition(circle, delay, frac)
+                });
+        }
+
+        // Returns an attrTween for translating along the specified path element.
+        function translateAlong(path, frac) {
+            var l = path.getTotalLength(); // * (frac || 1);
+            return function (d, i, a) {
+                return function (t) {
+                    // var p = path.getPointAtLength(Math.abs(t - frac || 0) * l);
+                    var progress = t - frac || 0;
+                    // (t - frac < 0 ) ? 
+                    progress = progress < 0 ? (progress + 1) : progress;
+                    // if (progress<0)
+                    var p = path.getPointAtLength(progress * l);
+                    return "translate(" + p.x + "," + p.y + ")";
+                };
+            };
+        }
+
+
+    },
+    animate_exit_chase: function () {
+        loading_ike.exit_chase_timeout && clearTimeout(loading_ike.exit_chase_timeout);
+
+        loading_ike.exit_chase_timeout = setTimeout(function () {
+
+            d3.select('.loading-ike-container g')
+                .attr('transform', 'translate(0, 0)')
+                .transition()
+                //Not the usual .2s
+                .duration(500)
+
+                //Lovely chase scene.
+                .ease(d3.easeBack)
+                // .ease(d3.easeBounce)
+                // .ease(d3.easeLinear)
+                .attr('transform', 'translate(0, 200)');
+
+            // d3.select
+
+        }, 3000);
+    }
+};
+
+module_menu = {
+    menu_items: [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+    ],
+    animate_entrance: function () {
+        var menu_container_svg = d3.select('.idaciti-module-menu-container svg');
+        /* Starting with one "from scratch" */
+        menu_container_svg.selectAll('*').remove();
+
+
+        var mark_width = 40;
+        var menu_container_append_to = menu_container_svg
+            .append('g')
+            .attr('transform', 'translate(' + ((mark_width / 2) + 10) + ', 10)');
+
+        var mark_translate_y = 20;
+        var mark_translate = 'translate(' + -mark_width / 2 + ', ' + mark_translate_y + ')';
+
+        var module_groups_line_func = d3.line()
+            .x(function (d) { return 0 }) //x(d.date); })
+            .y(function (d, i) { return mark_width / 2 }) //i * (mark_translate_y + (mark_width * .5)) }); //y(d.value); });
+
+        var module_groups_line_stretched_func = d3.line()
+            .x(function (d) { return 0 }) //x(d.date); })
+            .y(function (d, i) { return i === 0 ? mark_width / 2 : (i * ((module_menu.menu_items.length + 1) * 100)) - mark_width });
+
+        // return (mark_translate_y + (mark_width * .5)) }); //y(d.value); });
+
+        var module_groups_line = menu_container_append_to
+            .append('path')
+            // .data([{}, {}])
+            .attr('d', module_groups_line_func([{}, {}]))
+            .attr('stroke', '#3b3b3b')
+            .attr('stroke-width', 2);
+
+        var module_groups = menu_container_append_to
+            .selectAll('.module-group')
+            .data(module_menu.menu_items)
+            .enter()
+            .append('g')
+            .classed('module-group', true)
+
+            // so they are hidden /occluded by the  mark because they are behind it:
+            .attr('transform', 'translate(0, ' + (mark_translate_y + (mark_width * .5)) + ')');
+
+        module_groups
+            .append('circle')
+            .attr('r', '0')
+            // The grey of "dotties" 
+            .attr('fill', '#3b3b3b');
+        // .attr('fill', 'black');
+        // Animate the transform, dont start with it...
+        // .attr('transform', function (d, i) { return 'translate(0, ' + i * 5 + ')'; })
+        //Can't use px or percentages 
+        var menu_container_idaciti_mark = menu_container_append_to
+            .append('image');
+
+        /*(menu_container_idaciti_mark
+            .node()
+            .getBoundingClientRect() || {})
+            .width;
+*/
+        // .attr('width')
+        menu_container_idaciti_mark
+            .attr('xlink:href', './idaciti_mark.svg')
+            .attr('width', mark_width)
+            // .attr('height', 'auto')
+            //unexpected end of attribute
+            .attr('transform', 'translate(' + -mark_width / 2 + ', -100)');
+
+        menu_container_idaciti_mark
+            .transition()
+            .duration(400)
+            // So it bounces when it lands
+            // .ease(d3.easeBounce)
+            .ease(d3.easeBack)
+            .attr('transform', mark_translate);
+
+
+        module_groups
+            // .select('circle')
+            .transition()
+            .delay(400)
+            .select('circle')
+            .attr('r', 6);
+
+        module_groups_line
+            .transition()
+            .duration(1500)
+            .attr('d', module_groups_line_stretched_func([{}, {}]));
+
+        module_groups
+            // .select('circle')
+            .transition()
+            // .dela
+            .duration(1500)
+            .delay(function (d, i) {
+                // TODO: fractional delay
+                return i * 200;
+            })
+            // Then move it back "up" the chain by mark_width which is ~ height
+            .attr('transform', function (d, i, data) { return 'translate(0, ' + (((data.length - i) + 1) * 100 - mark_width) + ')'; })
+            .transition()
+            .duration(800)
+            .select('circle')
+            .attr('r', 30)
+        // <image xlink: href="./idaciti_mark.svg"></image>
+
+    },
+    exit: function () {
+        d3.selectAll('.idaciti-module-menu-container svg *').remove();
+
+    }
+}

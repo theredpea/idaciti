@@ -144,11 +144,13 @@ input {
 }
 
 .idaciti-background {
-  background-color: #bfd730;
+  /* background-color: #bfd730; */
+  background-color: #BCD62F;
 }
 
 .idaciti-foreground {
-  color: #bfd730;
+  /* color: #bfd730; */
+  color: #BCD62F;
 }
 
 .primary-color {
@@ -247,29 +249,50 @@ input {
   transition-delay: 0s;
 }
 
-.loading-curtain-drop.loading {
+.loading .loading-curtain-drop {
   height: calc(100% - 20px);
 }
 
-.loading-curtain-drop.loading .loading-ike-container svg {
+.loading-ike-container.loading svg {
 
-  transform: translate(-50%,0);
-  transition-delay: .2s;
+  transform: translate(-50%,-50%);
+  transition-delay: .3s;
+}
+
+.idaciti-module-menu-container {
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 300px;
+
+}
+
+.idaciti-module-menu-container svg {
+  height: 100%;
+  /* give some buffer: */
+  margin-left: 100px;
 }
 
 .highlight-notification-strip {
   height: 20px;
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   left: 0;
   right: 0;
   top: 0;
   transition: all .2s ease-in-out;
 }
 
+/* body:not(.loading) .highlight-notification-strip.fixed { */
 .highlight-notification-strip.fixed {
   height: 0;
+}
+
+body.loading .highlight-notification-strip.fixed {
+  height: 20px;
 }
 
 body,
@@ -360,7 +383,7 @@ html {
 
 }
 
-svg {
+.drawing-container svg {
   margin: auto;
   width: 100%;
   margin-top: -40px;
@@ -755,7 +778,8 @@ svg {
 }
 
 .benefit-container:nth-child(even) {
-  background-color: #999999;
+  /* background-color: #999999; */
+  background-color: #898989;
 
   /* background: -webkit-linear-gradient(left, rgba(124, 124, 124, 0) 0%,rgb(186, 186, 186) 50%,rgba(124, 124, 124, 0) 100%); */
 }

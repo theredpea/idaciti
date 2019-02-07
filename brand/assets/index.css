@@ -633,15 +633,17 @@ svg {
 }
 
 .idaciti-accent-background-3 {
-  background-color: #00c2b7;
+  background-color: #e9c403;
 }
 
 .idaciti-accent-background-4 {
-  background-color: #e9c403;
+  background-color: #00c2b7;
 }
 
 .benefit-header {
   margin-bottom: .5em;
+  font-size: 1.5em;
+  color: white;
 }
 
 .row:first-child {
